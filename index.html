@@ -383,17 +383,19 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
       <tr><td>Dev → Operaciones</td><td>Paquete para producción</td><td>Scripts manuales en ventana única de viernes noche</td><td>Release train mensual, entornos no reproducibles, riesgo concentrado</td></tr>
     </tbody>
   </table></div>
-  <div class="callout"><h3>Línea base (DORA)</h3><p>Frecuencia de despliegue: 1 al mes. Lead time: de 2 a 4 semanas como mínimo. Tasa de fallo: alta, por rechazos tardíos. Recuperación: lenta, porque depende de la siguiente ventana.</p></div>
+  <div class="callout"><h3>Lectura del flujo de valor</h3><p><strong>Desarrollo → DBA → Seguridad → Operaciones → Producción:</strong> cada área recibe el trabajo como una solicitud o paquete y lo devuelve cuando termina su parte. El equipo que construye la funcionalidad no controla el esquema, los controles de seguridad ni el despliegue; por eso una demora o un rechazo en cualquiera de los traspasos detiene la entrega completa. El paso por DBA puede consumir dos semanas de SLA y el paso a producción espera la ventana manual de los viernes, aunque la frecuencia observada siga siendo de un despliegue mensual.</p></div>
+  <div class="callout"><h3>Línea base observable</h3><p>Frecuencia de despliegue: 1 al mes. Un cambio de esquema tiene un SLA de 2 semanas, antes de sumar revisión y espera por la ventana de producción. No hay cifras de tasa de fallos ni de tiempo de recuperación en el caso; sí hay rechazos frecuentes de entregables completos y la recuperación queda condicionada por la siguiente ventana de despliegue.</p></div>
 
   <h3 style="margin-top:2.4rem">1.2 Implicación arquitectónica: por qué la BD es monolítica</h3>
-  <p>La cadena causal es <strong>estructura → comunicación → arquitectura</strong>:</p>
+  <p>El problema no es solamente usar una base de datos relacional: es que su propiedad y operación están concentradas en un silo. Los equipos de desarrollo no pueden modificar esquemas ni aprovisionar infraestructura por sí mismos; toda integración y cambio de datos debe pasar por los DBA, y Operaciones conserva el control del paso a producción. La estructura define quién puede comunicarse y cambiar cada parte, y esa comunicación termina reflejada en la arquitectura: <strong>estructura → comunicación → arquitectura</strong>.</p>
   <ol class="equipo-steps">
     <li><b>1. Un solo equipo de datos, un solo esquema</b>Para 3 DBAs que gobiernan, respaldan y auditan todo, lo más manejable es una única base.</li>
     <li><b>2. Integración por la BD, no por APIs</b>Ningún equipo puede crear su propio almacén, así que comparten tablas, hacen joins cruzados y dependen de triggers.</li>
     <li><b>3. El acoplamiento de datos impide desplegar por separado</b>Un cambio de esquema afecta a varios equipos, y todo debe salir junto.</li>
     <li><b>4. Operaciones refuerza el ciclo</b>Con despliegue manual en una ventana única, desplegar por servicio no es viable. Clonar la BD es costoso y se sigue compartiendo.</li>
-    <li><b>5. Resultado</b>Aunque en papel se planee microservicios, la organización produce un backend acoplado sobre una base compartida. Como dice Ruth Malan: si la arquitectura y la organización chocan, gana la organización.</li>
+    <li><b>5. Arquitectura resultante</b>El backend puede separarse en componentes en el código, pero los datos compartidos, los cambios coordinados y el despliegue conjunto los mantienen acoplados. En la práctica, la unidad de cambio y liberación sigue siendo el sistema completo, no cada servicio por separado.</li>
   </ol>
+  <div class="callout g"><h3>Conclusión del diagnóstico</h3><p>La organización no tiene límites de responsabilidad ni autonomía suficientes para sostener microservicios independientes: el silo de DBA centraliza los datos y el de Operaciones centraliza la producción. La arquitectura resultante reproduce esos límites organizacionales como una base monolítica compartida y una entrega acoplada. Para cambiar el resultado, no basta con dividir el código: también deben cambiar la propiedad de los datos, las capacidades de despliegue y las fronteras entre equipos.</p></div>
 </section>
 
 <!-- II · REDISEÑO -->
