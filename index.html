@@ -324,6 +324,7 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
     <a href="#i" data-nav="i">I</a>
     <a href="#ii" data-nav="ii">II</a>
     <a href="#iii" data-nav="iii">III</a>
+    <a href="#cierre" data-nav="cierre">Cierre</a>
   </nav>
 </header>
 <div class="bar" id="bar"></div>
@@ -493,10 +494,11 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
     <thead><tr><th>Fase</th><th>Modo</th><th>Duración</th><th>Actividades</th></tr></thead>
     <tbody>
       <tr><td>Descubrir</td><td>Colaboración</td><td>Semanas 0–6</td><td>Event storming del aprovisionamiento, pairing y mobbing, walking skeleton del portal (servicio, pipeline y BD). Fronteras difusas y responsabilidad conjunta.</td></tr>
-      <tr><td>Transición</td><td>Facilitación</td><td>Semanas 6–10</td><td>Un segundo stream adopta el portal con documentación por tareas y horas de consulta.</td></tr>
+      <tr><td>Estabilizar</td><td>Colaboración en cierre</td><td>Semanas 6–10</td><td>El piloto usa el portal por su cuenta y la plataforma reduce el pairing a revisiones puntuales. Se fijan la API del portal, la documentación por tareas y el SLO. La frontera pasa de difusa a explícita.</td></tr>
       <tr><td>Establecer</td><td>X-as-a-Service</td><td>Semana 10 en adelante</td><td>API versionada con SemVer, SLO de la plataforma, roadmap público, soporte asíncrono y sin reuniones de coordinación.</td></tr>
     </tbody>
   </table></div>
+  <p class="muted" style="margin-top:.8rem">La adopción del portal por los demás streams es otra relación (Plataforma ↔ demás streams, en modo Facilitación) y se muestra en la matriz 3.3.</p>
   <div class="cols">
     <div><div class="lbl">Criterios de salida de la colaboración</div><p>El piloto crea y despliega un servicio sin ayuda; aprovisionar un entorno toma menos de 1 hora; al menos el 80 % de sus despliegues pasa por el golden path.</p></div>
     <div><div class="lbl">Señales para volver a colaborar</div><p>Reaparecen tickets o peticiones manuales, algún stream construye atajos propios, o cae la adopción o el puntaje de DevEx. La fricción se trata como señal de que una frontera está mal ubicada o falta una capacidad.</p></div>
@@ -507,23 +509,67 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
   <ul class="check">
     <li>Threat modeling en la fase de diseño, en pareja con cada stream, no un día antes del pase.</li>
     <li>Un security champion por stream, formado en dojos y talleres de 4 a 8 semanas. El habilitador atiende como máximo 2 o 3 streams a la vez.</li>
-    <li>Define las reglas que la plataforma ejecuta en el pipeline: el control pasa a ser automático, temprano y no bloqueante.</li>
+    <li>Define las reglas que la plataforma ejecuta en el pipeline: el control pasa a ser automático y temprano. Un hallazgo crítico detiene el PR en minutos, no el entregable completo la víspera del pase; el resto se reporta sin frenar el flujo.</li>
     <li>La evidencia de cumplimiento (PCI DSS, segregación de funciones) se genera de forma continua en el pipeline y en la revisión entre pares del PR.</li>
-    <li>No toma tickets ni escribe código de producción. Sale de cada stream cuando su champion corrige hallazgos críticos sin ayuda, y planifica su propia extinción.</li>
+    <li>No toma tickets ni escribe código de producción. Rota: sale de cada stream cuando su champion corrige hallazgos críticos sin ayuda y pasa al siguiente.</li>
   </ul>
+  <div class="callout"><h3>Qué permanece y qué desaparece</h3><p>Legacy-Pay está sujeta a PCI DSS, así que la función de seguridad no se extingue. Los 5 se mantienen como Enabling Team rotativo: mantienen las políticas como código junto con la plataforma, forman nuevos champions y acompañan la auditoría externa con la evidencia del pipeline. Lo que desaparece es el control de bloqueo de última hora, no la seguridad.</p></div>
 
   <h3 style="margin-top:2.4rem">3.3 Matriz de interacciones en el tiempo</h3>
   <div class="tw"><table>
     <thead><tr><th>Relación</th><th>t0 · transición</th><th>t1 · estable</th></tr></thead>
     <tbody>
-      <tr><td>Plataforma ↔ stream piloto</td><td>Colaboración</td><td>X-as-a-Service</td></tr>
-      <tr><td>Plataforma ↔ demás streams</td><td>Facilitación</td><td>X-as-a-Service</td></tr>
+      <tr><td>Plataforma ↔ stream piloto</td><td>Colaboración (semanas 0–10)</td><td>X-as-a-Service</td></tr>
+      <tr><td>Plataforma ↔ demás streams</td><td>Facilitación (adopción guiada del portal, 1 o 2 streams a la vez)</td><td>X-as-a-Service</td></tr>
       <tr><td>Núcleo Transaccional ↔ streams</td><td>Colaboración (diseñar la API)</td><td>X-as-a-Service</td></tr>
-      <tr><td>Habilitador Seguridad ↔ Plataforma</td><td>Colaboración (controles en el golden path)</td><td>X-as-a-Service</td></tr>
-      <tr><td>Habilitador Seguridad ↔ streams</td><td>Facilitación rotativa</td><td>Sin interacción</td></tr>
-      <tr><td>Habilitador Datos ↔ streams</td><td>Facilitación</td><td>Sin interacción</td></tr>
+      <tr><td>Habilitador Seguridad ↔ Plataforma</td><td>Colaboración (definir los controles del golden path)</td><td>X-as-a-Service: la plataforma ejecuta los controles y Seguridad los mantiene como código por PR</td></tr>
+      <tr><td>Habilitador Seguridad ↔ streams</td><td>Facilitación rotativa</td><td>Sin interacción con ese stream; el habilitador pasa al siguiente</td></tr>
+      <tr><td>Habilitador Seguridad ↔ Núcleo</td><td>Facilitación (perímetro PCI DSS, llaves, segregación de funciones)</td><td>Sin interacción: el núcleo mantiene su evidencia</td></tr>
+      <tr><td>Habilitador Datos ↔ streams</td><td>Facilitación (extraer su BD con strangler)</td><td>Sin interacción</td></tr>
+      <tr><td>Habilitador Datos ↔ Núcleo</td><td>Facilitación (extraer el ledger: CDC, doble escritura y conciliación)</td><td>Sin interacción: el núcleo opera su BD</td></tr>
+      <tr><td>Habilitador Datos ↔ Plataforma</td><td>Colaboración (diseñar la BD por servicio)</td><td>X-as-a-Service</td></tr>
     </tbody>
   </table></div>
+  <div class="callout g"><h3>Destino de los 3 DBAs</h3><p>Su rol de habilitadores es temporal: cuando el último contexto sale de la BD monolítica, se integran al sub-equipo <b>Runtime y datos</b> de la plataforma, donde operan la BD como servicio. Así el conocimiento de datos se queda en la organización como capacidad de autoservicio y no vuelve a ser un silo de tickets.</p></div>
+</section>
+
+<!-- CIERRE -->
+<section class="s" id="cierre" data-group="cierre">
+  <div class="kicker">Cierre del comité</div>
+  <h2>Hoja de ruta, riesgos y supuestos de la transición</h2>
+  <p>La transición avanza por criterios de salida, no por fechas: cada fase termina cuando sus indicadores se cumplen. Los horizontes son una estimación del comité.</p>
+
+  <h3 style="margin-top:2rem">Hoja de ruta</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Fase</th><th>Horizonte</th><th>Hitos</th><th>Criterio de salida</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Fundaciones</td><td>Meses 0–3</td><td>Platform Team con su TVP y el piloto Comercios en Colaboración. Inventario de scripts y pase del viernes del monolito automatizado. Primeros champions de seguridad en 2 o 3 streams. Habilitador de Datos modela el nuevo esquema del ledger.</td><td>El piloto despliega sin ayuda; entorno en menos de 1 hora; 80 % de sus despliegues por el golden path.</td></tr>
+      <tr><td>2 · Escalar</td><td>Meses 3–9</td><td>Portal en X-as-a-Service para todos los streams, con Facilitación a 1 o 2 streams a la vez. Strangler extrae la BD de cada contexto. El núcleo publica su API y extrae el ledger con CDC y doble escritura.</td><td>100 % de los despliegues por el golden path: se retira la ventana del viernes. Ledger conciliado sin diferencias.</td></tr>
+      <tr><td>3 · Establecer</td><td>Meses 9–18</td><td>Todas las relaciones en X-as-a-Service. Seguridad rota como habilitador y los DBAs se integran a Runtime y datos. El monolito queda reducido a contextos residuales.</td><td>Despliegue bajo demanda por servicio, sin tickets; las cuatro métricas DORA medidas por stream.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.4rem">Riesgos y mitigaciones</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Riesgo</th><th>Mitigación</th><th>Señal de alerta</th></tr></thead>
+    <tbody>
+      <tr><td>«Silo renombrado»: la plataforma vuelve a operar por tickets</td><td>Plataforma como producto, adopción voluntaria y medición de DevEx; la plataforma no custodia accesos</td><td>Reaparecen tickets o peticiones manuales</td></tr>
+      <tr><td>Descuadre de dinero durante la doble escritura del ledger</td><td>CDC, conciliación diaria entre ambas bases, corte por contexto y plan de reversa</td><td>Diferencias en la conciliación diaria</td></tr>
+      <tr><td>Brecha de cumplimiento PCI DSS durante la transición</td><td>Datos de tarjeta concentrados en el núcleo; evidencia continua en el pipeline desde la fase 1; Seguridad acompaña la auditoría externa</td><td>Un control sin evidencia en el pipeline</td></tr>
+      <tr><td>Sobrecarga cognitiva de los streams al asumir la operación</td><td>Golden path, observabilidad por defecto y guardia incorporada de forma gradual</td><td>SLO incumplidos, incidentes repetidos o caída del puntaje de DevEx</td></tr>
+      <tr><td>El núcleo se vuelve un equipo de componentes con colas</td><td>API de autoservicio, simulador de redes y roadmap guiado por los streams</td><td>Peticiones acumuladas o streams esperando al núcleo</td></tr>
+      <tr><td>Resistencia de DBAs, auditores y SysAdmins por pérdida de control</td><td>Rol nuevo explícito para cada silo, formación y destino definido</td><td>Atajos que evitan el golden path o rotación de personal</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.4rem">Supuestos</h3>
+  <ul class="check">
+    <li>150 ingenieros: 132 en desarrollo y 18 en los silos. El Núcleo Transaccional se forma con 6 a 8 de los 132.</li>
+    <li>Línea base: 1 despliegue al mes y SLA de 2 semanas para cambios de esquema. No hay cifras de tasa de fallos ni de tiempo de recuperación; se empiezan a medir en la fase 1.</li>
+    <li>Comercios es el piloto por su alto volumen de cambios y su menor criticidad frente a autorización.</li>
+    <li>La dirección patrocina la redistribución de permisos: los streams despliegan y gestionan su esquema sin aprobación de un silo.</li>
+    <li>Los horizontes de cada fase son estimados; se ajustan según los criterios de salida.</li>
+  </ul>
 </section>
 
 
