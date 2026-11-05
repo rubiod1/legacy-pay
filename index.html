@@ -365,7 +365,8 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
   <div class="index">
     <a href="#i"><span class="n">I</span><div><h3>Diagnóstico de la Ley de Conway</h3><p class="muted">Tres traspasos a silos que explican el monolito</p></div></a>
     <a href="#ii"><span class="n">II</span><div><h3>Rediseño topológico</h3><p class="muted">Maniobra inversa: streams, plataforma y subsistema especialista</p></div></a>
-    <a href="#iii"><span class="n">III</span><div><h3>Dinámicas de interacción</h3><p class="muted">Discover-to-Establish, rol de los habilitadores y matriz en el tiempo</p></div></a>
+    <a href="#iii"><span class="n">III</span><div><h3>Dinámicas de interacción</h3><p class="muted">Discover-to-Establish, habilitador de Seguridad, matriz en el tiempo y fricción como señal</p></div></a>
+    <a href="#cierre"><span class="n">→</span><div><h3>Cierre del comité</h3><p class="muted">Trazabilidad, hoja de ruta, riesgos y supuestos</p></div></a>
   </div>
 </section>
 
@@ -536,7 +537,7 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
     <thead><tr><th>Ola</th><th>Streams</th><th>Modo</th><th>Por qué en ese orden</th></tr></thead>
     <tbody>
       <tr><td>0 · Semanas 0–10</td><td>Comercios</td><td><span class="tag red">Colaboración</span></td><td>Descubre las necesidades; está fuera del perímetro de tarjeta</td></tr>
-      <tr><td>1 · Meses 3–5</td><td>Disputas y contracargos, Riesgo y fraude</td><td><span class="tag amber">Facilitación</span></td><td>Streams de tipo Servicio con menor acoplamiento al ledger: validan que el portal no solo sirve al piloto</td></tr>
+      <tr><td>1 · Meses 3–5</td><td>Disputas y contracargos, Riesgo y fraude</td><td><span class="tag amber">Facilitación</span></td><td>Streams de tipo Servicio fuera del camino crítico de autorización: validan que el portal no solo sirve al piloto</td></tr>
       <tr><td>2 · Meses 5–9</td><td>Liquidación y conciliación, Adquirencia y autorización</td><td><span class="tag amber">Facilitación</span></td><td>Los más críticos y dependientes del núcleo: llegan cuando la API del núcleo y el segmento PCI de la plataforma están estables</td></tr>
     </tbody>
   </table></div>
@@ -574,8 +575,8 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
   <div class="tw" style="margin-top:1.4rem"><table>
     <thead><tr><th>Ola</th><th>Pareja A</th><th>Pareja B</th><th>Criterio</th></tr></thead>
     <tbody>
-      <tr><td>1 · Meses 0–3</td><td>Comercios, junto con el piloto de plataforma</td><td>Núcleo Transaccional y Adquirencia</td><td>Máximo riesgo PCI primero; Comercios valida los controles del golden path mientras nacen</td></tr>
-      <tr><td>2 · Meses 3–6</td><td>Riesgo y fraude</td><td>Liquidación y conciliación</td><td>Datos financieros sensibles y reportes regulatorios</td></tr>
+      <tr><td>1 · Meses 0–3</td><td>Comercios, junto con el piloto de plataforma</td><td>Núcleo Transaccional y Adquirencia: threat modeling del perímetro de tarjeta, llaves y segregación de funciones</td><td>Máximo riesgo PCI primero. Comercios valida los controles del golden path mientras nacen; en el núcleo y Adquirencia la evidencia en el pipeline llega con el segmento PCI de la plataforma, en la fase 2</td></tr>
+      <tr><td>2 · Meses 3–6</td><td>Riesgo y fraude</td><td>Liquidación y conciliación; evidencia PCI del núcleo en el segmento PCI ya construido</td><td>Datos financieros sensibles y reportes regulatorios</td></tr>
       <tr><td>3 · Meses 6–9</td><td>Disputas y contracargos</td><td>Refuerzo del núcleo y de la comunidad de champions</td><td>Cierre del primer ciclo: los 5 streams con champion activo</td></tr>
     </tbody>
   </table></div>
@@ -617,7 +618,7 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
     <tbody>
       <tr><td>Plataforma ↔ Comercios (piloto)</td><td><span class="tag red">Colaboración</span> semanas 0–10</td><td><span class="tag green">X-as-a-Service</span></td><td>Criterios de salida de 3.1</td></tr>
       <tr><td>Plataforma ↔ demás streams</td><td><span class="tag amber">Facilitación</span> por olas, 1 o 2 a la vez</td><td><span class="tag green">X-as-a-Service</span></td><td>El stream despliega sin ayuda por el golden path</td></tr>
-      <tr><td>Plataforma ↔ Núcleo Transaccional</td><td><span class="tag red">Colaboración</span> segmento PCI: red aislada, HSM y pipeline con controles reforzados</td><td><span class="tag green">X-as-a-Service</span></td><td>El segmento PCI se ofrece desde el portal como variante del golden path</td></tr>
+      <tr><td>Plataforma ↔ Núcleo Transaccional</td><td><span class="tag red">Colaboración</span> meses 3–5, segmento PCI: red aislada, HSM y pipeline con controles reforzados</td><td><span class="tag green">X-as-a-Service</span></td><td>El segmento PCI se ofrece desde el portal como variante del golden path</td></tr>
       <tr><td>Núcleo ↔ Adquirencia y Liquidación</td><td><span class="tag red">Colaboración</span> diseñar la API de autorización y del ledger</td><td><span class="tag green">X-as-a-Service</span></td><td>API publicada con SemVer, SLO y simulador de redes</td></tr>
       <tr><td>Núcleo ↔ Riesgo y Disputas</td><td><span class="tag green">X-as-a-Service</span> desde el inicio</td><td><span class="tag green">X-as-a-Service</span></td><td>Consumen la API y los eventos ya publicados</td></tr>
       <tr><td>Stream ↔ stream</td><td><span class="tag green">X-as-a-Service</span> por APIs y eventos; <span class="tag red">Colaboración</span> acotada solo donde los dominios se superponen (p. ej., Adquirencia ↔ Riesgo en el scoring en línea)</td><td><span class="tag green">X-as-a-Service</span></td><td>Contrato del evento versionado</td></tr>
@@ -653,12 +654,24 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
   <h2>Hoja de ruta, riesgos y supuestos de la transición</h2>
   <p>La transición avanza por criterios de salida, no por fechas: cada fase termina cuando sus indicadores se cumplen. Los horizontes son una estimación del comité.</p>
 
-  <h3 style="margin-top:2rem">Hoja de ruta</h3>
+  <h3 style="margin-top:2rem">Trazabilidad: del diagnóstico al rediseño</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Problema · I</th><th>Qué lo reemplaza</th><th>Equipo y modo</th><th>Métrica · hoy → meta</th></tr></thead>
+    <tbody>
+      <tr><td>Traspaso Dev → DBA</td><td>BD por servicio con migraciones versionadas en el pipeline; strangler sobre la BD monolítica</td><td>Stream dueño de su esquema · Plataforma: BD como servicio <span class="tag green">X-as-a-Service</span> · Datos <span class="tag amber">Facilitación</span></td><td>Cambio de esquema: SLA de 2 semanas → mismo día, dentro del PR</td></tr>
+      <tr><td>Traspaso Dev → Seguridad</td><td>Threat modeling en el diseño y controles como código en cada PR</td><td>Stream con champion · Seguridad <span class="tag amber">Facilitación</span> · Plataforma ejecuta <span class="tag green">X-as-a-Service</span></td><td>Rechazos de último minuto: frecuentes → cero; hallazgos críticos detectados en el PR</td></tr>
+      <tr><td>Traspaso Dev → Operaciones</td><td>Golden path de CI/CD con GitOps, canary y rollback automático</td><td>Stream despliega · Plataforma <span class="tag red">Colaboración</span> → <span class="tag green">X-as-a-Service</span></td><td>Frecuencia: 1 al mes → bajo demanda por servicio; ventana del viernes retirada</td></tr>
+      <tr><td>BD monolítica compartida (1.2)</td><td>Integración por APIs y eventos; ledger extraído al núcleo</td><td>Streams · Núcleo <span class="tag green">X-as-a-Service</span> · Datos <span class="tag amber">Facilitación</span></td><td>Unidad de liberación: sistema completo → cada servicio</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted" style="margin-top:.8rem">Las metas son objetivos del comité. La tasa de fallos y el tiempo de recuperación no tienen línea base en el caso y se empiezan a medir en la fase 1.</p>
+
+  <h3 style="margin-top:2.4rem">Hoja de ruta</h3>
   <div class="tw"><table>
     <thead><tr><th>Fase</th><th>Horizonte</th><th>Hitos</th><th>Criterio de salida</th></tr></thead>
     <tbody>
       <tr><td>1 · Fundaciones</td><td>Meses 0–3</td><td>Platform Team con su TVP y el piloto Comercios en Colaboración. Inventario de scripts y pase del viernes del monolito automatizado. Seguridad define con Plataforma los controles del golden path y forma los primeros champions en Comercios, Adquirencia y el núcleo (perímetro PCI). Habilitador de Datos modela el nuevo esquema del ledger.</td><td>El piloto despliega sin ayuda; entorno en menos de 1 hora; 80 % de sus despliegues por el golden path.</td></tr>
-      <tr><td>2 · Escalar</td><td>Meses 3–9</td><td>Portal en X-as-a-Service, con Facilitación por olas: Disputas y Riesgo, luego Liquidación y Adquirencia. Seguridad continúa con Riesgo, Liquidación y Disputas. Strangler extrae la BD de cada contexto. El núcleo publica su API y extrae el ledger con CDC y doble escritura.</td><td>100 % de los despliegues por el golden path: se retira la ventana del viernes. Ledger conciliado sin diferencias.</td></tr>
+      <tr><td>2 · Escalar</td><td>Meses 3–9</td><td>Portal en X-as-a-Service, con Facilitación por olas: Disputas y Riesgo, luego Liquidación y Adquirencia. Plataforma y Núcleo construyen el segmento PCI en Colaboración (meses 3–5). Seguridad continúa con Riesgo, Liquidación y Disputas. Strangler extrae la BD de cada contexto. El núcleo publica su API y extrae el ledger con CDC y doble escritura.</td><td>100 % de los despliegues por el golden path: se retira la ventana del viernes. Ledger conciliado sin diferencias.</td></tr>
       <tr><td>3 · Establecer</td><td>Meses 9–18</td><td>Todas las relaciones en X-as-a-Service. Seguridad rota como habilitador y los DBAs se integran a Runtime y datos. El monolito queda reducido a contextos residuales.</td><td>Despliegue bajo demanda por servicio, sin tickets; las cuatro métricas DORA medidas por stream.</td></tr>
     </tbody>
   </table></div>
