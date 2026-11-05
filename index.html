@@ -40,7 +40,7 @@ body{
 
 /* ---------- secciones ---------- */
 main{position:relative;z-index:1;padding-top:0}
-section.s{position:relative;min-height:100vh;padding:10vh max(5vw,calc((100vw - 900px)/2));display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+section.s{position:relative;min-height:100vh;padding:10vh max(5vw,calc((100vw - 900px)/2));display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);opacity:1;transform:none}
 section.s > *{width:100%;min-width:0;margin-left:auto;margin-right:auto;max-width:900px}
 section.s.in{opacity:1;transform:none}
 section.s:target{opacity:1;transform:none}
@@ -312,6 +312,36 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
 .diagram-viewer-stage{position:relative;height:min(80vh,920px);background:#fff;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:4px;overflow:hidden;cursor:grab;touch-action:none;box-shadow:3px 3px 0 var(--line)}
 .diagram-viewer-stage.grabbing{cursor:grabbing}
 .diagram-viewer-stage > svg{position:absolute;top:0;left:0;transform-origin:0 0;width:auto !important;height:auto !important;max-width:none;user-select:none;-webkit-user-drag:none;border:none !important}
+
+/* Legibilidad del documento y de su impresión. */
+td code{overflow-wrap:anywhere}
+.table-hint{display:none}
+tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
+@media (max-width:600px){
+  .team-meta p{grid-template-columns:1fr !important}
+  .team-meta b{white-space:normal}
+  th,td{padding:.55rem;font-size:.86rem}
+  .interaction-table{min-width:650px}
+  .table-hint{display:block;font-size:.85rem;color:var(--muted);margin-top:.6rem}
+}
+@media print{
+  @page{size:A4;margin:16mm}
+  body{background:#fff;font-size:10pt;color:#1B2430}
+  #bg,.top,.bar,.diagram-viewer-toolbar,.hx{display:none !important}
+  section.s,section.s.hero{display:block;min-height:0;padding:0 0 8mm;opacity:1;transform:none;break-before:page}
+  section.s:first-child{break-before:auto}
+  section.s > *{max-width:none}
+  h1{font-size:30pt}h2{font-size:21pt}h3{font-size:12pt;break-after:avoid}
+  p,li{font-size:10pt}table{font-size:9pt}th{font-size:8pt}
+  .tw{overflow:visible;box-shadow:none}thead{display:table-header-group}
+  tr,.card,.callout,li{break-inside:avoid}
+  .grid,.equipo-steps{gap:4mm}.card{box-shadow:none}
+  .diagram-viewer-stage{height:auto !important;aspect-ratio:auto !important;overflow:visible;box-shadow:none;border:0}
+  .diagram-viewer-stage > svg{position:static !important;width:100% !important;height:auto !important;transform:none !important}
+  figure{break-inside:avoid}
+  details > *{display:block !important}
+}
+
 </style>
 </head>
 <body>
@@ -344,9 +374,10 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
       <rect x="24" y="336" width="372" height="28" rx="14" fill="var(--accent)"/><text x="39" y="355" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="700" letter-spacing="0.4" fill="#FFFFFF">DESPUÉS · cuatro tipos de equipo y tres modos</text>
       <g id="gDespues" transform="translate(0,398)"></g>
     </svg>
+    <p class="muted" style="font-size:.9rem;margin-top:.6rem">Animación conceptual del flujo. Los contadores ilustran recorridos y la topología detallada se presenta en el bloque II.</p>
     <div class="row" style="margin:.7rem 0 0;gap:1.4rem">
-      <span class="count" id="cAntes">silos: 0 despliegues al mes</span>
-      <span class="count" id="cDespues">streams: 0 despliegues esta semana</span>
+      <span class="count" id="cAntes">silos · recorrido ilustrativo</span>
+      <span class="count" id="cDespues">streams · recorridos ilustrativos</span>
     </div>
   </div>
 
@@ -361,7 +392,13 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
 <!-- CONTENIDO -->
 <section class="s" id="contenido" data-group="contenido">
   <div class="kicker">Contenido</div>
-  <h2>Índice</h2>
+  <h2>Decisiones del comité</h2>
+  <div class="grid three-grid" style="margin-bottom:1.6rem">
+    <div class="card accent"><h3>Propiedad por equipo</h3><p>Quince equipos en cinco flujos de valor, con servicios y datos propios. Ocho especialistas encapsulan el procesamiento monetario en el Núcleo.</p></div>
+    <div class="card accent"><h3>Autoservicio operativo</h3><p>Los diez SysAdmins construyen Plataforma. Cada equipo despliega y opera su servicio mediante capacidades con contratos y controles explícitos.</p></div>
+    <div class="card accent"><h3>Aprendizaje verificable</h3><p>Alta de comercios descubre el portal con Plataforma. Seguridad y Datos transfieren habilidades y cierran cada intervención al demostrar autonomía.</p></div>
+  </div>
+  <p style="margin-bottom:1rem">La meta es entregar bajo demanda por servicio y reducir la espera entre equipos. El piloto permitirá medir la mejora frente a un despliegue mensual y al SLA de dos semanas para cambios de datos.</p>
   <div class="index">
     <a href="#i"><span class="n">I</span><div><h3>Diagnóstico de la Ley de Conway</h3><p class="muted">Tres traspasos a silos que explican el monolito</p></div></a>
     <a href="#ii"><span class="n">II</span><div><h3>Rediseño topológico</h3><p class="muted">Maniobra inversa: streams, plataforma y subsistema especialista</p></div></a>
@@ -373,333 +410,282 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
 <!-- I · DIAGNÓSTICO -->
 <section class="s" id="i" data-group="i">
   <div class="kicker"><span class="sec">I</span>Diagnóstico de la Ley de Conway</div>
-  <h2>Tres traspasos explican el monolito</h2>
-  <p>Legacy-Pay tiene 150 ingenieros: 5 equipos de desarrollo que escriben código sin permisos de despliegue, infraestructura ni esquema, y tres silos funcionales que concentran cada paso hasta producción.</p>
-
-  <h3 style="margin-top:2rem">1.1 Los tres traspasos de mayor fricción</h3>
+  <h2>Tres traspasos concentran la espera y acoplan la entrega</h2>
+  <p>El caso describe 150 ingenieros, cinco equipos de desarrollo y tres silos que controlan los cambios de datos, la revisión de seguridad y la producción. La frecuencia observada es de un despliegue mensual.</p>
+  <h3 id="diagnostico" style="margin-top:1.5rem">1.1 Cuellos de botella del flujo de valor</h3>
   <div class="tw"><table>
-    <thead><tr><th>Traspaso</th><th>Qué cruza</th><th>Fricción</th><th>Efecto en el flujo</th></tr></thead>
+    <thead><tr><th>Traspaso</th><th>Hecho del caso</th><th>Efecto sobre la entrega</th></tr></thead>
     <tbody>
-      <tr><td>Dev → DBA</td><td>Ticket de cambio de esquema</td><td>SLA de 2 semanas; 3 personas atienden a todos</td><td>Cambios acumulados en lote; las releases quedan atadas</td></tr>
-      <tr><td>Dev → Seguridad</td><td>Código terminado</td><td>Revisión estática un día antes; rechazo del entregable completo</td><td>Retroalimentación tardía, retrabajo y lotes cada vez más grandes</td></tr>
-      <tr><td>Dev → Operaciones</td><td>Paquete para producción</td><td>Scripts manuales en ventana única de viernes noche</td><td>Release train mensual, entornos no reproducibles, riesgo concentrado</td></tr>
+      <tr><td>Desarrollo → DBA</td><td>Tres DBAs concentran los cambios de la BD monolítica. Cada solicitud requiere ticket y tiene un SLA de dos semanas.</td><td>El equipo espera una capacidad externa para completar su cambio. La cola compartida favorece la acumulación y coordinación de entregas.</td></tr>
+      <tr><td>Desarrollo → Seguridad</td><td>Cinco auditores revisan el código un día antes del pase y rechazan entregables completos con frecuencia.</td><td>La retroalimentación llega al final. El rechazo obliga a corregir y repetir la revisión del lote, desplazando la entrega.</td></tr>
+      <tr><td>Desarrollo → Operaciones</td><td>Diez SysAdmins ejecutan scripts manuales los viernes. Desarrollo carece de permisos para desplegar o aprovisionar.</td><td>La entrega depende de disponibilidad operativa y de una ventana compartida. El equipo que construye el cambio tiene autonomía incompleta.</td></tr>
     </tbody>
   </table></div>
-  <div class="callout"><h3>Lectura del flujo de valor</h3><p><strong>Desarrollo → DBA → Seguridad → Operaciones → Producción:</strong> cada área recibe el trabajo como una solicitud o paquete y lo devuelve cuando termina su parte. El equipo que construye la funcionalidad no controla el esquema, los controles de seguridad ni el despliegue; por eso una demora o un rechazo en cualquiera de los traspasos detiene la entrega completa. El paso por DBA puede consumir dos semanas de SLA y el paso a producción espera la ventana manual de los viernes, aunque la frecuencia observada siga siendo de un despliegue mensual.</p></div>
-  <div class="callout"><h3>Línea base observable</h3><p>Frecuencia de despliegue: 1 al mes. Un cambio de esquema tiene un SLA de 2 semanas, antes de sumar revisión y espera por la ventana de producción. No hay cifras de tasa de fallos ni de tiempo de recuperación en el caso; sí hay rechazos frecuentes de entregables completos y la recuperación queda condicionada por la siguiente ventana de despliegue.</p></div>
-
-  <h3 style="margin-top:2.4rem">1.2 Implicación arquitectónica: por qué la BD es monolítica</h3>
-  <p>El problema no es solamente usar una base de datos relacional: es que su propiedad y operación están concentradas en un silo. Los equipos de desarrollo no pueden modificar esquemas ni aprovisionar infraestructura por sí mismos; toda integración y cambio de datos debe pasar por los DBA, y Operaciones conserva el control del paso a producción. La estructura define quién puede comunicarse y cambiar cada parte, y esa comunicación termina reflejada en la arquitectura: <strong>estructura → comunicación → arquitectura</strong>.</p>
+  <div class="callout"><h3>Lectura del flujo</h3><p>Un cambio que requiere esquema, código y despliegue atraviesa las tres fronteras. Cada espera o devolución retrasa el resultado para el comercio. El SLA de datos y la ventana del viernes explican restricciones del flujo. El tiempo total de entrega debe medirse desde la solicitud hasta producción, porque el caso no cuantifica todas sus etapas.</p></div>
+  <h3 id="causalidad" style="margin-top:1.8rem">1.2 De las fronteras organizacionales al acoplamiento técnico</h3>
   <ol class="equipo-steps">
-    <li><b>1. Un solo equipo de datos, un solo esquema</b>Para 3 DBAs que gobiernan, respaldan y auditan todo, lo más manejable es una única base.</li>
-    <li><b>2. Integración por la BD, no por APIs</b>Ningún equipo puede crear su propio almacén, así que comparten tablas, hacen joins cruzados y dependen de triggers.</li>
-    <li><b>3. El acoplamiento de datos impide desplegar por separado</b>Un cambio de esquema afecta a varios equipos, y todo debe salir junto.</li>
-    <li><b>4. Operaciones refuerza el ciclo</b>Con despliegue manual en una ventana única, desplegar por servicio no es viable. Clonar la BD es costoso y se sigue compartiendo.</li>
-    <li><b>5. Arquitectura resultante</b>El backend puede separarse en componentes en el código, pero los datos compartidos, los cambios coordinados y el despliegue conjunto los mantienen acoplados. En la práctica, la unidad de cambio y liberación sigue siendo el sistema completo, no cada servicio por separado.</li>
+    <li><b>Propiedad central de datos</b>Los equipos dependen del mismo grupo para evolucionar sus esquemas. Esta frontera favorece la integración mediante el modelo de datos común y dificulta que cada flujo establezca su propio contrato.</li>
+    <li><b>Cambios con impacto compartido</b>La BD monolítica permite dependencias entre contextos. Un cambio de estructura puede afectar a varios consumidores y exige coordinar su compatibilidad.</li>
+    <li><b>Producción centralizada</b>La ejecución manual y la ventana común refuerzan la planificación conjunta de cambios. Separar componentes de código deja pendiente la capacidad de liberarlos de forma autónoma.</li>
+    <li><b>Arquitectura resultante</b>La comunicación atraviesa silos funcionales y el sistema reproduce esas dependencias en datos y liberaciones. La maniobra inversa debe redistribuir propiedad, capacidades y contratos entre equipos.</li>
   </ol>
-  <div class="callout g"><h3>Conclusión del diagnóstico</h3><p>La organización no tiene límites de responsabilidad ni autonomía suficientes para sostener microservicios independientes: el silo de DBA centraliza los datos y el de Operaciones centraliza la producción. La arquitectura resultante reproduce esos límites organizacionales como una base monolítica compartida y una entrega acoplada. Para cambiar el resultado, no basta con dividir el código: también deben cambiar la propiedad de los datos, las capacidades de despliegue y las fronteras entre equipos.</p></div>
+  <p class="muted" style="margin-top:1rem">La dependencia de tablas compartidas es una inferencia arquitectónica a validar con un mapa de consumidores. El enunciado confirma la BD monolítica y los permisos centralizados. La línea base disponible es un despliegue mensual y dos semanas de SLA para cambios de esquema.</p>
 </section>
 
 <!-- II · REDISEÑO -->
 <section class="s" id="ii" data-group="ii">
   <div class="kicker"><span class="sec">II</span>Rediseño topológico · Maniobra inversa</div>
-  <h2>Equipos por flujo de valor, plataforma y un subsistema especialista</h2>
-  <p><strong>Supuesto de dimensionamiento:</strong> 150 − 18 de los silos ≈ 132 desarrolladores, unos 26 por equipo. Eso excede el rango de 5 a 9 personas, así que cada equipo actual se convierte en una familia de 2 o 3 equipos stream-aligned, cada uno dueño de su servicio.</p>
-
-  <figure class="drawio-fig"><div class="diagram-viewer"><div class="diagram-viewer-toolbar"><button type="button" data-zoom="in">+ Zoom</button><button type="button" data-zoom="out">− Zoom</button><button type="button" data-zoom="fit">Ajustar</button></div><div class="diagram-viewer-stage" style="height:auto;aspect-ratio:673 / 418"><svg viewBox="-7.703208923339844 -8.275402069091797 673.0694808959961 417.87165451049805" width="673" height="418"><g><g></g><g transform="translate(-14.877005347593581,-1.7165775401069516) scale(0.5721925133689839)"><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="40" y="16" width="900" height="36" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="40" y="16" width="900" height="36" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9958" y="-9966" width="20896" height="20032"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 20px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: nowrap; ">TO-BE · Legacy-Pay: equipos y modos de interacción</div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><path d="M 360 122 L 360 76.24 Q 360 70 353.76 70 L 46.24 70 Q 40 70 40 76.24 L 40 122" fill="#f3f7f4" stroke="#4a7a5e" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(243, 247, 244), rgb(24, 27, 25)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></path><path d="M 40 122 L 40 683.76 Q 40 690 46.24 690 L 353.76 690 Q 360 690 360 683.76 L 360 122" fill="#f3f7f4" stroke="#4a7a5e" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(243, 247, 244), rgb(24, 27, 25)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></path><path d="M 40 122 L 360 122" fill="none" stroke="white" stroke-width="10" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 40 122 L 360 122" fill="none" stroke="#4a7a5e" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9910" y="-9904" width="20268" height="20048"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 15px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: nowrap; ">Stream-aligned teams · 5 flujos</div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="60" y="136" width="280" height="72" rx="21.6" ry="21.6" fill="#ffffff" stroke="#4a7a5e" stroke-width="1.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9828" width="20276" height="20068"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Adquirencia y autorización</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">checkout · API pública de pagos</font></div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="60" y="236" width="280" height="72" rx="21.6" ry="21.6" fill="#e6eef5" stroke="#2d5c7f" stroke-width="2.5" pointer-events="all" style="fill: light-dark(rgb(230, 238, 245), rgb(27, 34, 40)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9728" width="20276" height="20068"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Comercios · piloto</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">onboarding · KYC · tarifas</font></div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="60" y="336" width="280" height="72" rx="21.6" ry="21.6" fill="#ffffff" stroke="#4a7a5e" stroke-width="1.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9628" width="20276" height="20068"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Liquidación y conciliación</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">settlement · abonos · reportes</font></div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="60" y="436" width="280" height="72" rx="21.6" ry="21.6" fill="#ffffff" stroke="#4a7a5e" stroke-width="1.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9528" width="20276" height="20068"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Riesgo y fraude</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">reglas · monitoreo · alertas</font></div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="60" y="536" width="280" height="72" rx="21.6" ry="21.6" fill="#ffffff" stroke="#4a7a5e" stroke-width="1.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9428" width="20276" height="20068"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Disputas y contracargos</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">casos · evidencias · redes</font></div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="60" y="626" width="280" height="44" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="60" y="626" width="280" height="44" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9939" y="-9352" width="20276" height="20040"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #5B6670; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#5B6670, #8e98a0); line-height: 1.2; pointer-events: all; font-style: italic; white-space: normal; word-wrap: normal; ">Cada stream es dueño de su código, BD, pipeline, guardia y SLO</div></div></div></foreignObject></g></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Groups.svg" preserveAspectRatio="none" x="52" y="80" width="32" height="32"></image></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="520" y="70" width="320" height="110" rx="19.8" ry="19.8" fill="#ffffff" stroke="#1b2430" stroke-width="2" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(27, 36, 48), rgb(200, 208, 218));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9412" y="-9875" width="20250" height="20106"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 252px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Complicated-subsystem</b><br>Núcleo transaccional<br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">autorización · ledger · ISO 8583 · PCI DSS</font></div></div></div></foreignObject></g></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Account_Balance.svg" preserveAspectRatio="none" x="536" y="105" width="40" height="40"></image></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="520" y="260" width="320" height="150" rx="27" ry="27" fill="#e1e8ee" stroke="#4a7a5e" stroke-width="2.5" pointer-events="all" style="fill: light-dark(rgb(225, 232, 238), rgb(34, 40, 46)); stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9412" y="-9665" width="20240" height="20146"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 242px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Platform Team</b><br>ex 10 SysAdmins · plataforma como producto<br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">golden path · CI/CD GitOps · BD por servicio · políticas como código · observabilidad</font></div></div></div></foreignObject></g></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Layers.svg" preserveAspectRatio="none" x="536" y="315" width="40" height="40"></image></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="960" y="290" width="200" height="90" rx="21.6" ry="21.6" fill="#ffffff" stroke="#1b2430" stroke-width="2" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(27, 36, 48), rgb(200, 208, 218));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-8980" y="-9665" width="20138" height="20086"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 140px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Producción</b><br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">autoservicio · sin tickets</font></div></div></div></foreignObject></g></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Rocket_Launch.svg" preserveAspectRatio="none" x="972" y="317" width="36" height="36"></image></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="480" y="500" width="400" height="170" rx="10.2" ry="10.2" fill="#fbf6ee" stroke="#9a6b2f" stroke-width="2" stroke-dasharray="16 10" pointer-events="all" style="fill: light-dark(rgb(251, 246, 238), rgb(30, 25, 19)); stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9474" y="-9343" width="20352" height="20156"><div style="display: flex; align-items: unsafe flex-end; justify-content: unsafe flex-start; width: 354px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 15px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">Enabling teams · temporales</div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="496" y="514" width="176" height="104" rx="18.72" ry="18.72" fill="#ffffff" stroke="#9a6b2f" stroke-width="1.5" stroke-dasharray="4.5 4.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9452" y="-9434" width="20122" height="20100"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 124px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Seguridad</b><br>ex 5 auditores<br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">DevSecOps · champions</font></div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><rect x="688" y="514" width="176" height="104" rx="18.72" ry="18.72" fill="#ffffff" stroke="#9a6b2f" stroke-width="1.5" stroke-dasharray="4.5 4.5" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9260" y="-9434" width="20122" height="20100"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 124px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Datos</b><br>ex 3 DBAs<br><font style="font-size: 12px; color: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" color="#5B6670">BD por servicio · strangler</font></div></div></div></foreignObject></g></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/School.svg" preserveAspectRatio="none" x="490" y="634" width="28" height="28"></image></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Shield.svg" preserveAspectRatio="none" x="504" y="549" width="34" height="34"></image></g><g style="visibility: visible;"><image xlink:href="https://icons.diagrams.net/assets/material-symbols/1/Database.svg" preserveAspectRatio="none" x="696" y="549" width="34" height="34"></image></g><g style="visibility: visible;"><path d="M 509.9 272 L 350.1 272" fill="none" stroke="white" stroke-width="11" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 509.9 272 L 350.1 272" fill="none" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 516.65 272 L 507.65 276.5 L 509.9 272 L 507.65 267.5 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 343.35 272 L 352.35 267.5 L 350.1 272 L 352.35 276.5 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9570" y="-9728" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #2D5C7F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#2D5C7F, #83abc9); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Colaboración → XaaS</div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><path d="M 520 399.95 L 369.17 399.85" fill="none" stroke="white" stroke-width="10.5" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 520 399.95 L 369.17 399.85" fill="none" stroke="#9a6b2f" stroke-width="2.5" stroke-miterlimit="10" stroke-dasharray="20 12.5" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></path><path d="M 362.79 399.84 L 371.3 395.6 L 369.17 399.85 L 371.29 404.1 Z" fill="#9a6b2f" stroke="#9a6b2f" stroke-width="2.5" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(154, 107, 47), rgb(176, 136, 84)); stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9560" y="-9600" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #9A6B2F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#9A6B2F, #b08854); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Facilitación → XaaS</div></div></div></foreignObject></g></g><g style="visibility: visible;"><path d="M 509.9 110.04 L 370.1 109.99" fill="none" stroke="white" stroke-width="11" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 509.9 110.04 L 370.1 109.99" fill="none" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 516.65 110.04 L 507.64 114.54 L 509.9 110.04 L 507.65 105.54 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 363.35 109.99 L 372.36 105.49 L 370.1 109.99 L 372.35 114.49 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9560" y="-9890" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #2D5C7F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#2D5C7F, #83abc9); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Colaboración → XaaS</div></div></div></foreignObject></g></g><g style="visibility: visible;"><path d="M 584 503.9 L 584 420.1" fill="none" stroke="white" stroke-width="11" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 584 503.9 L 584 420.1" fill="none" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 584 510.65 L 579.5 501.65 L 584 503.9 L 588.5 501.65 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 584 413.35 L 588.5 422.35 L 584 420.1 L 579.5 422.35 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9416" y="-9538" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #2D5C7F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#2D5C7F, #83abc9); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Colab. → XaaS</div></div></div></foreignObject></g></g><g style="visibility: visible;"><path d="M 776 503.9 L 776 420.1" fill="none" stroke="white" stroke-width="11" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 776 503.9 L 776 420.1" fill="none" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 776 510.65 L 771.5 501.65 L 776 503.9 L 780.5 501.65 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path><path d="M 776 413.35 L 780.5 422.35 L 776 420.1 L 771.5 422.35 Z" fill="#2d5c7f" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(45, 92, 127), rgb(131, 171, 201)); stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9224" y="-9538" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #2D5C7F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#2D5C7F, #83abc9); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Colab. → XaaS</div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><path d="M 480 599.96 L 369.17 600.09" fill="none" stroke="white" stroke-width="10.5" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 480 599.96 L 369.17 600.09" fill="none" stroke="#9a6b2f" stroke-width="2.5" stroke-miterlimit="10" stroke-dasharray="20 12.5" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></path><path d="M 362.79 600.1 L 371.29 595.84 L 369.17 600.09 L 371.3 604.34 Z" fill="#9a6b2f" stroke="#9a6b2f" stroke-width="2.5" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(154, 107, 47), rgb(176, 136, 84)); stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9580" y="-9400" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #9A6B2F; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: light-dark(#9A6B2F, #b08854); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">Facilitación → salida</div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><path d="M 840 335 L 951.76 335" fill="none" stroke="white" stroke-width="10" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 840 335 L 951.76 335" fill="none" stroke="#5b6670" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));"></path><path d="M 957.76 335 L 949.76 339 L 951.76 335 L 949.76 331 Z" fill="#5b6670" stroke="#5b6670" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(91, 102, 112), rgb(142, 152, 160)); stroke: light-dark(rgb(91, 102, 112), rgb(142, 152, 160));"></path></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9100" y="-9665" width="20000" height="20000"><div style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; color: #5B6670; background-color: #FFFFFF; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#5B6670, #8e98a0); line-height: 1.2; pointer-events: all; font-weight: bold; background-color: light-dark(#FFFFFF, #121212); white-space: nowrap; ">GitOps · canary</div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="960" y="440" width="200" height="150" rx="12" ry="12" fill="#ffffff" stroke="#c5d0da" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(197, 208, 218), rgb(51, 61, 69));"></rect></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="972" y="448" width="176" height="24" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="972" y="448" width="176" height="24" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9026" y="-9540" width="20172" height="20020"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 174px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #1B2430; "><div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: light-dark(#1B2430, #c8d0da); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "><b>Modos de interacción</b></div></div></div></foreignObject></g></g><g style="visibility: visible;"><path d="M 974 488 L 1008 488" fill="none" stroke="white" stroke-width="11" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 974 488 L 1008 488" fill="none" stroke="#2d5c7f" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(45, 92, 127), rgb(131, 171, 201));"></path></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="1016" y="478" width="140" height="20" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="1016" y="478" width="140" height="20" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-8982" y="-9512" width="20136" height="20016"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 138px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #2D5C7F; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#2D5C7F, #83abc9); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">Colaboración</div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><path d="M 974 512 L 1008 512" fill="none" stroke="white" stroke-width="10.5" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 974 512 L 1008 512" fill="none" stroke="#9a6b2f" stroke-width="2.5" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(154, 107, 47), rgb(176, 136, 84));"></path></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="1016" y="502" width="140" height="20" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="1016" y="502" width="140" height="20" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-8982" y="-9488" width="20136" height="20016"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 138px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #9A6B2F; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#9A6B2F, #b08854); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">Facilitación</div></div></div></foreignObject></g></g><g transform="translate(0.8738317757009346,0.8738317757009346)" style="visibility: visible;"><path d="M 974 536 L 1008 536" fill="none" stroke="white" stroke-width="10" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));" visibility="hidden" vector-effect="non-scaling-stroke"></path><path d="M 974 536 L 1008 536" fill="none" stroke="#4a7a5e" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(74, 122, 94), rgb(111, 153, 129));"></path></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="1016" y="526" width="140" height="20" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="1016" y="526" width="140" height="20" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-8982" y="-9464" width="20136" height="20016"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 138px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #4A7A5E; "><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#4A7A5E, #6f9981); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">X-as-a-Service</div></div></div></foreignObject></g></g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="972" y="554" width="176" height="32" fill="none" stroke="white" pointer-events="stroke" visibility="hidden" stroke-width="9" vector-effect="non-scaling-stroke"></rect><rect x="972" y="554" width="176" height="32" fill="none" stroke="none" pointer-events="all"></rect></g><g><g><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" x="-9026" y="-9430" width="20172" height="20028"><div style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 174px; height: 1px; padding-top: 10000px; margin-left: 10000px;"><div style="box-sizing: border-box; font-size: 0; text-align: left; color: #5B6670; "><div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: light-dark(#5B6670, #8e98a0); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">Etiqueta: modo en transición → modo estable</div></div></div></foreignObject></g></g></g><g aria-hidden="true"></g><g aria-hidden="true"></g></g></svg></div></div><figcaption><b>TO-BE.</b> Los cuatro tipos de equipo de Team Topologies y su modo de interacción: cada línea indica el modo durante la transición y, en la etiqueta, el modo estable al que evoluciona. Se puede ampliar, desplazar con el arrastre y ajustar con los controles.</figcaption></figure>
-
-  <h3 style="margin-top:2rem">2.1 Stream-Aligned Teams</h3>
-  <p>Cada stream es un equipo <strong>multifuncional y de larga duración</strong>, alineado a un único flujo de valor y con propiedad de extremo a extremo. Dentro de su frontera están todas las capacidades necesarias para llevar un cambio de la idea a producción. Cada stream adopta una de dos formas organizacionales:</p>
-  <div class="grid compare-grid" style="margin:.4rem 0 1.2rem"><div class="card"><span class="tag blue">Producto</span><p>Flujo customer-facing, con versiones y roadmap de usuario.</p></div><div class="card"><span class="tag orange">Servicio</span><p>Capacidad con cadencia o regulación, consumida por otros streams.</p></div></div>
+  <h2>Quince equipos de entrega en cinco flujos de valor</h2>
+  <p>El comité propone redistribuir las 150 personas en 124 integrantes de equipos stream-aligned, ocho del Núcleo Transaccional, diez de Plataforma, cinco de Seguridad y tres de Datos. Se asume que los 18 especialistas actuales están incluidos en el total del caso. El núcleo se forma con ocho de los 132 desarrolladores.</p>
+  <figure class="drawio-fig" id="topologia">
+  <div class="diagram-viewer">
+    <div class="diagram-viewer-toolbar"><button type="button" data-zoom="in" aria-label="Ampliar diagrama">+ Zoom</button><button type="button" data-zoom="out" aria-label="Reducir diagrama">− Zoom</button><button type="button" data-zoom="fit">Ajustar</button></div>
+    <div class="diagram-viewer-stage" style="height:auto;aspect-ratio:1100 / 1030"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1030" width="1100" height="1030" role="img" aria-labelledby="tobe-title tobe-desc">
+<title id="tobe-title">Topología propuesta y contratos de interacción</title>
+<desc id="tobe-desc">150 personas. Quince equipos stream-aligned en cinco flujos, dos equipos de Plataforma, Núcleo Transaccional y habilitadores de Seguridad y Datos. Las relaciones R1 a R10 se detallan en la matriz 3.3.</desc>
+<rect width="1100" height="1030" fill="#FFFFFF"/>
+<text x="30" y="35" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#1B2430">TO-BE · 150 personas y contratos de interacción</text>
+<text x="30" y="64" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#5B6670">Los cinco flujos agrupan quince equipos con servicios y datos propios.</text>
+<rect x="30" y="90" width="440" height="520" rx="10" fill="#F3F7F4" stroke="#4A7A5E" stroke-width="2"/>
+<text x="46" y="117" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Stream-aligned · 124 personas</text>
+<rect x="50" y="145" width="400" height="66" rx="10" fill="#FFFFFF" stroke="#4A7A5E" stroke-width="2"/>
+<text x="66" y="172" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Adquirencia · 25</text>
+<text x="66" y="197" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Checkout 8 · API 9 · Experiencia 8</text>
+<rect x="50" y="235" width="400" height="66" rx="10" fill="#E6EEF5" stroke="#2D5C7F" stroke-width="2"/>
+<text x="66" y="262" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Comercios · 25</text>
+<text x="66" y="287" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Alta 8 · Tarifas 8 · Portal 9</text>
+<rect x="50" y="325" width="400" height="66" rx="10" fill="#FFFFFF" stroke="#4A7A5E" stroke-width="2"/>
+<text x="66" y="352" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Liquidación y conciliación · 25</text>
+<text x="66" y="377" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Liquidación 9 · Abonos 8 · Conciliación 8</text>
+<rect x="50" y="415" width="400" height="66" rx="10" fill="#FFFFFF" stroke="#4A7A5E" stroke-width="2"/>
+<text x="66" y="442" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Riesgo y fraude · 25</text>
+<text x="66" y="467" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Scoring 9 · Reglas 8 · Investigación 8</text>
+<rect x="50" y="505" width="400" height="66" rx="10" fill="#FFFFFF" stroke="#4A7A5E" stroke-width="2"/>
+<text x="66" y="532" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Disputas y contracargos · 24</text>
+<text x="66" y="557" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Contracargos 8 · Evidencias 8 · Reembolsos 8</text>
+<rect x="690" y="90" width="360" height="130" rx="10" fill="#FFFFFF" stroke="#1B2430" stroke-width="2"/>
+<text x="706" y="117" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Núcleo · 8 especialistas</text>
+<text x="706" y="142" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Subsistema complicado</text>
+<text x="706" y="167" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Autorización · ledger · tokenización</text>
+<text x="706" y="192" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Contratos de API y eventos</text>
+<rect x="690" y="340" width="360" height="150" rx="10" fill="#E1E8EE" stroke="#4A7A5E" stroke-width="2"/>
+<text x="706" y="367" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Plataforma · 10 personas</text>
+<text x="706" y="392" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Entrega 5 · Runtime y datos 5</text>
+<text x="706" y="417" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Portal · CI/CD · BD gestionada</text>
+<text x="706" y="442" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Redes · controles · observabilidad</text>
+<text x="706" y="467" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Runtime incorpora 3 DBAs al final</text>
+<rect x="30" y="650" width="620" height="66" rx="10" fill="#FBF6EE" stroke="#9A6B2F" stroke-width="2"/>
+<text x="46" y="677" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Receptores · 15 equipos stream-aligned y Núcleo</text>
+<text x="46" y="702" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Cada intervención finaliza al demostrar autonomía.</text>
+<rect x="80" y="810" width="400" height="108" rx="10" fill="#FBF6EE" stroke="#9A6B2F" stroke-width="2"/>
+<text x="96" y="837" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Seguridad · 5 habilitadores</text>
+<text x="96" y="862" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Dos parejas de facilitación</text>
+<text x="96" y="887" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Una persona en políticas y evidencia</text>
+<rect x="650" y="810" width="400" height="108" rx="10" fill="#FBF6EE" stroke="#9A6B2F" stroke-width="2"/>
+<text x="666" y="837" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1B2430">Datos · 3 habilitadores temporales</text>
+<text x="666" y="862" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Modelado · migraciones · recuperación</text>
+<text x="666" y="887" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">Destino final en Runtime y datos</text>
+<polyline points="690,125 515,125 515,178 450,178" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="535" y="97" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="540" y="115" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R4 C → X</text>
+<polyline points="690,195 630,195 630,448 470,448" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="505" y="422" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="510" y="440" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R5 C → X</text>
+<polyline points="690,365 555,365 555,268 450,268" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="475" y="238" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="480" y="256" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R1 C → X</text>
+<polyline points="690,430 665,430 665,590 470,590" fill="none" stroke="#9A6B2F" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="510" y="562" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="515" y="580" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#9A6B2F">R2 F → X</text>
+<polyline points="870,220 870,340" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="885" y="264" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="890" y="282" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R3 C → X</text>
+<polyline points="230,301 230,325" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="240" y="303" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="245" y="321" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R6 C → X</text>
+<polyline points="480,865 550,865 550,745 770,745 770,490" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="785" y="592" width="93.6" height="25" rx="4" fill="#FFFFFF"/>
+<text x="790" y="610" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R7 C → X</text>
+<polyline points="1030,810 1080,810 1080,530 1010,530 1010,490" fill="none" stroke="#2D5C7F" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="885" y="535" width="113.0" height="25" rx="4" fill="#FFFFFF"/>
+<text x="890" y="553" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#2D5C7F">R8 C → fin</text>
+<polyline points="260,810 260,716" fill="none" stroke="#9A6B2F" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="275" y="757" width="113.0" height="25" rx="4" fill="#FFFFFF"/>
+<text x="280" y="775" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#9A6B2F">R9 F → fin</text>
+<polyline points="850,810 850,780 600,780 600,716" fill="none" stroke="#9A6B2F" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="645" y="750" width="122.69999999999999" height="25" rx="4" fill="#FFFFFF"/>
+<text x="650" y="768" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#9A6B2F">R10 F → fin</text>
+<text x="30" y="955" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#5B6670">R4 · Adquirencia / Liquidación     R5 · Riesgo / Disputas     R6 · Entre equipos de negocio</text>
+<text x="30" y="986" font-family="Arial, sans-serif" font-size="17" font-weight="400" fill="#1B2430">C = Colaboración     F = Facilitación     X = X-as-a-Service     fin = cierre de la intervención</text>
+<text x="30" y="1013" font-family="Arial, sans-serif" font-size="16" font-weight="400" fill="#5B6670">R1–R10 se desarrollan en la matriz 3.3. Cada cambio de modo requiere cumplir su condición de salida.</text>
+</svg></div>
+  </div>
+  <figcaption><b>TO-BE.</b> Los identificadores relacionan cada vínculo con su contrato en la matriz 3.3. R1 corresponde a Alta de comercios y su validación con Tarifas. R2 cubre los demás equipos. R9 y R10 incluyen a los quince equipos de negocio y al Núcleo. El cierre de R8 precede a la posterior integración de Datos en Plataforma.</figcaption>
+</figure>
+  <h3 id="equipos" style="margin-top:1.8rem">2.1 Equipos estables con propiedad de extremo a extremo</h3>
+  <p>Los cinco flujos agrupan equipos de ocho o nueve personas. Cada equipo posee un resultado de negocio, sus servicios y datos, pruebas, pipeline, observabilidad, guardia y SLO. La composición incorpora capacidades de producto, desarrollo, calidad, operación y seguridad. El reparto por especialidad se valida al reasignar personas.</p>
   <div class="tw"><table>
-    <thead><tr><th>Stream</th><th>Forma que adopta</th><th>Funcionalidades que posee</th><th>Servicios y datos propios</th></tr></thead>
+    <thead><tr><th>Flujo y resultado</th><th>Equipos, personas y servicios propios</th><th>Datos y frontera</th></tr></thead>
     <tbody>
-      <tr><td>Adquirencia y autorización</td><td><span class="tag">Producto</span></td><td>Checkout web y móvil, link y botón de pago, API pública y SDK para comercios, tokenización de tarjeta, 3-D Secure, reintentos idempotentes</td><td><code>checkout</code>, <code>payments-api</code>, <code>tokenization</code> · BD de intenciones de pago. Pide la decisión de autorización al núcleo por API.</td></tr>
-      <tr><td>Comercios · piloto</td><td><span class="tag">Producto</span></td><td>Onboarding y KYC, alta de sucursales y terminales, tarifas y comisiones, portal del comercio con ventas y usuarios, llaves de API</td><td><code>merchant-onboarding</code>, <code>pricing</code>, <code>merchant-portal</code> · maestro de comercios, contratos y tarifas</td></tr>
-      <tr><td>Liquidación y conciliación</td><td><span class="tag">Servicio</span></td><td>Cierre de lote, cálculo del neto (venta menos comisión y retenciones), dispersión del abono, conciliación con redes y banco, extractos y facturación de comisiones</td><td><code>settlement</code>, <code>payouts</code>, <code>reconciliation</code> · lotes y liquidaciones. Lee los asientos del ledger por API y eventos.</td></tr>
-      <tr><td>Riesgo y fraude</td><td><span class="tag">Servicio</span></td><td>Scoring en tiempo real, reglas de velocidad y listas, límites por comercio, monitoreo transaccional y alertas, revisión manual de casos, monitoreo AML</td><td><code>fraud-scoring</code>, <code>rules</code>, <code>case-review</code> · perfiles de riesgo y señales</td></tr>
-      <tr><td>Disputas y contracargos</td><td><span class="tag">Servicio</span></td><td>Recepción de contracargos, aviso al comercio, carga de evidencias, representment y arbitraje, reembolsos</td><td><code>chargebacks</code>, <code>evidence</code>, <code>refunds</code> · casos y evidencias</td></tr>
+      <tr><td><b>Adquirencia</b><br>Completar la experiencia de pago del comercio.<br><strong>25 personas</strong></td><td>Checkout · 8 · <code>checkout</code><br>API de pagos · 9 · <code>payments-api</code><br>Experiencia de pago · 8 · <code>payment-experience</code></td><td>Sesiones de checkout, intenciones de pago y flujo 3-D Secure. Cada equipo mantiene su almacén. Consumen autorización y tokenización del Núcleo mediante API.</td></tr>
+      <tr><td><b>Comercios</b><br>Activar y atender al comercio.<br><strong>25 personas</strong></td><td>Alta de comercios · 8 · <code>merchant-onboarding</code><br>Tarifas · 8 · <code>pricing</code><br>Portal · 9 · <code>merchant-portal</code></td><td>Onboarding/KYC, tarifas y configuración del portal, con almacenes separados. Alta de comercios inicia el piloto. Tarifas verifica la adopción autónoma.</td></tr>
+      <tr><td><b>Liquidación y conciliación</b><br>Abonar y explicar el resultado económico.<br><strong>25 personas</strong></td><td>Liquidación · 9 · <code>settlement</code><br>Abonos · 8 · <code>payouts</code><br>Conciliación · 8 · <code>reconciliation</code></td><td>Cada equipo posee lotes, órdenes de abono o resultados de conciliación, respectivamente. Consumen asientos del Núcleo y solicitan movimientos mediante su API.</td></tr>
+      <tr><td><b>Riesgo y fraude</b><br>Evaluar y gestionar el riesgo transaccional.<br><strong>25 personas</strong></td><td>Scoring · 9 · <code>fraud-scoring</code><br>Reglas · 8 · <code>rules</code><br>Investigación · 8 · <code>case-review</code></td><td>Señales y decisiones, políticas de riesgo y expedientes, respectivamente. Scoring participa en la autorización en línea. Las investigaciones pueden procesarse de forma asíncrona.</td></tr>
+      <tr><td><b>Disputas y contracargos</b><br>Resolver reclamaciones y reembolsos.<br><strong>24 personas</strong></td><td>Contracargos · 8 · <code>chargebacks</code><br>Evidencias · 8 · <code>evidence</code><br>Reembolsos · 8 · <code>refunds</code></td><td>Casos, documentos y solicitudes de reembolso en almacenes propios. Reembolsos posee el proceso de negocio y pide al Núcleo ejecutar el movimiento de dinero.</td></tr>
+    </tbody>
+    <tfoot><tr><td><b>15 equipos · 124 personas</b></td><td colspan="2">124 + 8 Núcleo + 10 Plataforma + 5 Seguridad + 3 Datos = <strong>150 personas</strong>.</td></tr></tfoot>
+  </table></div>
+  <div class="callout g"><h3>Fronteras que permiten liberar por separado</h3><p>Cada servicio, repositorio y esquema tiene un equipo propietario. Los demás consumen APIs o eventos versionados y mantienen sus propias proyecciones. Los cambios compatibles y las pruebas de contrato permiten liberar cada servicio por separado. Las fronteras se validan con DDD y event storming, considerando cadencia, riesgo y normativa. La BD compartida se extrae progresivamente por contexto con strangler.</p></div>
+  <h3 id="carga" style="margin-top:1.8rem">Carga cognitiva que conserva y que delega cada equipo</h3>
+  <p>La siguiente clasificación es una hipótesis del comité. Cada equipo la revisa durante el piloto mediante entrevistas, interrupciones, tiempo de incorporación y capacidad para operar su servicio. Si un equipo acumula dos dominios complejos o necesita coordinación continua, se ajusta su frontera antes de ampliar su alcance.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Equipo o grupo</th><th>Carga de dominio conservada</th><th>Capacidad que reduce la carga</th></tr></thead>
+    <tbody>
+      <tr><td>Equipos de Adquirencia</td><td>Complicada en checkout/API. Compleja en evolución de la experiencia de pago y autenticación del cliente.</td><td>Núcleo encapsula protocolo de redes, tokenización y consistencia monetaria. Plataforma proporciona ejecución y telemetría.</td></tr>
+      <tr><td>Equipos de Comercios</td><td>Complicada en alta, tarifas y portal. Cada equipo posee un resultado delimitado.</td><td>Plantillas, BD gestionada y pipeline reducen la carga operativa. Seguridad facilita el tratamiento seguro de datos de onboarding.</td></tr>
+      <tr><td>Equipos de Liquidación</td><td>Complicada en lotes y abonos. Compleja en conciliación de excepciones entre redes y banco.</td><td>Núcleo conserva la consistencia del ledger. Plataforma gestiona ejecución, backups y recuperación.</td></tr>
+      <tr><td>Equipos de Riesgo y Disputas</td><td>Compleja en scoring adaptativo y en resolución de contracargos, a cargo de equipos distintos. Complicada en reglas, expedientes, evidencias y reembolsos.</td><td>Núcleo ejecuta movimientos de dinero. Plataforma encapsula infraestructura. Los habilitadores transfieren prácticas específicas.</td></tr>
+      <tr><td>Núcleo Transaccional</td><td>Alta especialización técnica en protocolos, criptografía y consistencia contable del procesamiento de pagos.</td><td>Plataforma absorbe operación de infraestructura y Seguridad facilita controles. Se revisan saturación y cola de cambios del núcleo.</td></tr>
     </tbody>
   </table></div>
-  <p class="muted" style="margin-top:.8rem">Con unas 26 personas por flujo, cada stream se organiza como una familia de 2 o 3 equipos de 5 a 9 personas. Por ejemplo, Adquirencia se divide en checkout y API pública, y Comercios en onboarding y portal.</p>
-  <div class="grid compare-grid" style="margin-top:1.1rem">
-    <div class="card accent"><h3>Cómo se integran</h3><p>Por APIs y eventos, nunca por la base de datos de otro equipo. Por ejemplo, Adquirencia publica <code>PaymentAuthorized</code> y Liquidación y Riesgo lo consumen en sus propias bases. Cada servicio y cada repositorio tienen exactamente un dueño.</p></div>
-    <div class="card accent"><h3>Cómo se trazan las fronteras</h3><p>Con DDD y event storming sobre el flujo de pago. Los planos de fractura secundarios explican los cortes: cadencia (liquidación diaria frente a autorización en línea), riesgo (fraude) y normativa (disputas). La BD monolítica se descompone con el patrón strangler, un contexto a la vez.</p></div>
-  </div>
-  <div class="callout g"><h3>Mandato común: «tú lo construyes, tú lo operas»</h3><p>Cada stream es dueño de su código, su base de datos, su pipeline, su guardia y su SLO, y de la seguridad de su aplicación. No tiene hand-offs bloqueantes y posee como máximo un dominio complejo.</p></div>
-
-  <h3 style="margin-top:2.4rem">2.2 Platform Team (desde los 10 SysAdmins)</h3>
-  <p>Es el equipo central de la transformación. Convierte los flujos que hoy Operaciones ejecuta a mano en capacidades de autoservicio. Ya no despliega por nadie: construye y opera la plataforma interna (IDP) como un producto.</p>
-  <div class="callout"><h3>Mandato nuevo: la plataforma como producto</h3><p>La adopción es voluntaria y se gana con DevEx. El equipo trabaja con un roadmap de producto, conoce los arquetipos de desarrollador y sus puntos de dolor, prototipa con el stream piloto, usa sus propios servicios (dogfooding) y se mide por adopción y salud.</p></div>
-  <p class="lbl" style="margin-top:1.4rem">De la operación manual al autoservicio</p>
+  <h3 id="plataforma" style="margin-top:1.8rem">2.2 Plataforma como producto de autoservicio</h3>
+  <p>Los diez SysAdmins se reorganizan en <b>Entrega, cinco personas</b>, responsable de plantillas, portal y CI/CD, y <b>Runtime y datos, cinco personas</b>, responsable de infraestructura, redes, almacenamiento y observabilidad. Cada capacidad tiene un propietario dentro de Plataforma y una interfaz común de autoservicio.</p>
   <div class="tw"><table>
-    <thead><tr><th>Flujo de Operaciones hoy</th><th>Capacidad de la plataforma</th><th>Cómo lo usa el stream</th></tr></thead>
+    <thead><tr><th>Capacidad</th><th>Acción autónoma del equipo consumidor</th><th>Responsable de plataforma</th></tr></thead>
     <tbody>
-      <tr><td>Pase a producción con scripts manuales en la ventana del viernes</td><td>Golden path de CI/CD con GitOps, despliegue progresivo (canary, blue-green) y rollback automático</td><td>Hace merge y despliega cuando el cambio está listo</td></tr>
-      <tr><td>Aprovisionamiento de servidores y entornos por ticket</td><td>Infraestructura como código con módulos aprobados y entornos efímeros desde el portal</td><td>Crea un entorno en menos de 1 hora</td></tr>
-      <tr><td>Redes, firewall y certificados por solicitud</td><td>Redes declarativas, mTLS entre servicios, DNS y certificados automáticos</td><td>Declara a qué servicios llama y la política se aplica sola</td></tr>
-      <tr><td>Cambios de esquema en la BD monolítica, vía DBAs</td><td>BD por servicio gestionada, migraciones versionadas en el pipeline, backups y recuperación a un punto en el tiempo</td><td>Versiona su esquema junto con su código</td></tr>
-      <tr><td>Revisión de seguridad manual antes del pase</td><td>SAST, SCA y escaneo de secretos e imágenes en el pipeline; políticas como código definidas con Seguridad; gestión de secretos</td><td>Recibe los hallazgos en el PR, no la víspera del pase</td></tr>
-      <tr><td>Monitoreo y guardia centralizados</td><td>Observabilidad por defecto (OpenTelemetry: logs, métricas y trazas), SLO y alertas por servicio, runbooks</td><td>Opera su servicio y su guardia con sus propios tableros</td></tr>
+      <tr><td>Golden path de CI/CD</td><td>Crear y desplegar un servicio mediante GitOps, pruebas, revisión entre pares, canary y rollback validado.</td><td>Entrega</td></tr>
+      <tr><td>Entornos e infraestructura como código</td><td>Aprovisionar entornos con plantillas aprobadas, identidades de mínimo privilegio y límites de consumo.</td><td>Runtime y datos</td></tr>
+      <tr><td>BD por servicio</td><td>Crear su almacén, versionar migraciones compatibles y solicitar restauraciones desde el portal.</td><td>Runtime y datos</td></tr>
+      <tr><td>Redes, secretos y observabilidad</td><td>Declarar conectividad, rotar secretos y consultar logs, métricas, trazas y alertas por servicio.</td><td>Runtime y datos</td></tr>
+      <tr><td>Controles de entrega</td><td>Recibir hallazgos de SAST, dependencias, secretos e imágenes en cada PR y conservar evidencia de ejecución.</td><td>Entrega integra el catálogo versionado de Seguridad.</td></tr>
     </tbody>
   </table></div>
-  <div class="grid compare-grid" style="margin-top:1.1rem">
-    <div class="card accent"><h3>Organización interna de los 10</h3><p>Dos sub-equipos de 5 personas: <b>Entrega</b> (CI/CD, entornos y portal del desarrollador) y <b>Runtime y datos</b> (cloud y Kubernetes, redes, BD como servicio y observabilidad). Arriba hay un portal único con una DevEx unificada. Abajo están las primitivas de cloud.</p></div>
-    <div class="card accent"><h3>Del SysAdmin al ingeniero de plataforma</h3><p>El trabajo pasa de ejecutar scripts a escribir software de plataforma: IaC, pipelines y operadores. Las prácticas SRE (SLO y presupuesto de error) guían la confiabilidad. El soporte operativo a los streams es opcional y crece o se reduce según su uso.</p></div>
-  </div>
-  <p class="lbl" style="margin-top:1.6rem">Cómo migra la operación a la plataforma</p>
-  <ol class="equipo-steps">
-    <li><b>1. Inventario</b>Mapear los scripts, runbooks y tickets actuales, y priorizarlos por fricción: despliegue, entornos y BD primero.</li>
-    <li><b>2. TVP con el piloto</b>Plantillas, documentación y un pipeline estándar para Comercios, en modo colaboración.</li>
-    <li><b>3. Automatizar también el monolito</b>Su pase del viernes se automatiza primero, mientras el strangler lo va reduciendo.</li>
-    <li><b>4. Portal y X-as-a-Service</b>Catálogo de capacidades para todos los streams. La ventana del viernes se retira cuando el 100 % de los despliegues pasa por el golden path.</li>
-  </ol>
-  <div class="callout"><h3>Antipatrones a evitar</h3><p>El «silo renombrado», que es Operaciones con otro nombre aprovisionando por tickets, y el «equipo DevOps» independiente que despliega por otros. La plataforma diseña capacidades; no custodia accesos.</p></div>
-  <p class="muted" style="margin-top:.8rem">Se mide por adopción (servicios en el golden path), tiempo de aprovisionamiento, DevEx y las cuatro métricas DORA. La meta es que desplegar no requiera ningún ticket.</p>
-
-  <h3 style="margin-top:2.4rem">2.3 Complicated-Subsystem Team: Núcleo Transaccional</h3>
-  <p>Se justifica para el <strong>motor de autorización y el ledger</strong>. El criterio no es que el componente se comparta, porque eso produciría un equipo de componentes con colas y hand-offs. El criterio es la carga cognitiva: es complejidad intrínseca que exige especialistas escasos y no cabe en cada stream.</p>
-  <div class="grid three-grid">
-    <div class="card"><h3>Motor de autorización</h3><p>Mensajería ISO 8583 con las redes, enrutamiento a emisores, stand-in cuando el emisor no responde, reversos automáticos por timeout e idempotencia en cada mensaje.</p></div>
-    <div class="card"><h3>Ledger de doble partida</h3><p>Asientos inmutables, saldos con consistencia fuerte y conciliación contable. Es la fuente de verdad del dinero: Liquidación y Disputas leen de él, no lo modifican.</p></div>
-    <div class="card"><h3>Criptografía y PCI DSS</h3><p>Integración con HSM y gestión de llaves y tokens. Concentrar los datos de tarjeta en este perímetro reduce el alcance PCI del resto de la organización.</p></div>
-  </div>
-  <p class="lbl" style="margin-top:1.4rem">API de equipo del núcleo</p>
+  <p style="margin-top:1rem">La plataforma viable inicial ofrece una plantilla, un pipeline, un entorno y una BD para el piloto. Su roadmap prioriza fricciones medidas con los usuarios. La adopción se gana mediante DevEx, documentación por tareas y soporte asíncrono. Las políticas de seguridad se aplican a cualquier ruta de despliegue aprobada. Se automatiza también la entrega del monolito durante la transición.</p>
+  <h3 id="nucleo" style="margin-top:1.8rem">2.3 Núcleo Transaccional como subsistema complicado</h3>
+  <p>Ocho especialistas poseen el procesamiento monetario. La mensajería ISO 8583, los reversos idempotentes, la criptografía con HSM y los asientos consistentes requieren conocimiento profundo que sería costoso duplicar en los quince equipos. Su API encapsula esa complejidad y permite evolucionar las experiencias de negocio con contratos estables.</p>
   <div class="tw"><table>
-    <thead><tr><th>Elemento</th><th>Contenido</th></tr></thead>
+    <thead><tr><th>Contrato del núcleo</th><th>Propiedad y uso</th></tr></thead>
     <tbody>
-      <tr><td>Operaciones</td><td>Autorizar, capturar, anular y reversar, reembolsar y consultar estado; registrar asiento y consultar saldo</td></tr>
-      <tr><td>Eventos</td><td><code>PaymentAuthorized</code>, <code>PaymentCaptured</code>, <code>PaymentReversed</code>, <code>LedgerEntryPosted</code></td></tr>
-      <tr><td>Promesa</td><td>SemVer, SLO de latencia y disponibilidad publicados, roadmap guiado por los streams</td></tr>
-      <tr><td>Autoservicio</td><td>Documentación por tareas y un simulador de redes para que los streams prueben sin coordinar</td></tr>
-      <tr><td>Lo que no hace</td><td>No recibe tickets ni hace el trabajo de los streams; los cambios entran por su roadmap</td></tr>
+      <tr><td>Autorización y movimiento de dinero</td><td>Núcleo posee <code>authorization</code>, <code>ledger</code> y <code>tokenization</code>, sus repositorios y almacenes. Expone autorizar, capturar, reversar, reembolsar, tokenizar y consultar estado o saldo.</td></tr>
+      <tr><td>Eventos canónicos</td><td>Núcleo publica <code>PaymentAuthorized</code>, <code>PaymentCaptured</code>, <code>PaymentReversed</code> y <code>LedgerEntryPosted</code>. Cada evento tiene identificador único, versión y contrato. Los consumidores deduplican y gestionan reintentos.</td></tr>
+      <tr><td>Frontera de Adquirencia</td><td>Adquirencia conserva la intención y experiencia de pago. Solicita al Núcleo la autorización y tokenización. El Núcleo conserva los datos de tarjeta y las claves criptográficas.</td></tr>
+      <tr><td>Frontera de Riesgo</td><td>Scoring evalúa el riesgo mediante una API con presupuesto de latencia. La colaboración inicial acuerda timeouts y la decisión ante indisponibilidad. El Núcleo combina esa respuesta con las reglas del procesamiento.</td></tr>
+      <tr><td>Promesa de servicio</td><td>API y eventos versionados, simulador de redes, documentación por tareas y roadmap. Los SLO de disponibilidad y latencia se acuerdan y prueban con los consumidores antes de cerrar la colaboración.</td></tr>
     </tbody>
   </table></div>
-  <p class="muted" style="margin-top:.8rem">Lo forman 6 a 8 ingenieros senior de los equipos actuales que ya conocen el core, con perfiles en ISO 8583, contabilidad, criptografía y rendimiento.</p>
-  <p class="lbl" style="margin-top:1.4rem">Apoyo de los habilitadores, con fecha de salida</p>
-  <div class="grid compare-grid">
-    <div class="card warn"><h3>Habilitador de Datos · ex 3 DBAs</h3><p>Facilita la extracción del ledger desde la BD monolítica: modelado del nuevo esquema, migración con captura de cambios (CDC) y doble escritura, y conciliación diaria entre ambas bases mientras conviven. Sale cuando el núcleo opera su BD sin ayuda.</p></div>
-    <div class="card warn"><h3>Habilitador de Seguridad · ex 5 auditores</h3><p>Facilita el cumplimiento PCI DSS del perímetro: threat modeling del entorno de datos de tarjeta, controles de llaves y segregación de funciones, y evidencia continua en el pipeline. Sale cuando el núcleo mantiene esa evidencia por su cuenta.</p></div>
-  </div>
-  <div class="callout g"><h3>Ciclo de vida de la interacción</h3><p><b>Descubrimiento</b>: colaboración estrecha con Adquirencia y Liquidación para diseñar la API. <b>Estabilización</b>: API clara de autoservicio. Después, X-as-a-Service con un roadmap guiado por los streams.</p></div>
+  <p class="muted" style="margin-top:1rem">El dominio de pagos con tarjeta, el alcance PCI DSS y los servicios propuestos son supuestos de diseño. Seguridad valida el alcance y los controles aplicables. La adopción productiva del Núcleo requiere evidencia de esos controles y pruebas de su contrato.</p>
 </section>
 
-<!-- III · DINÁMICAS -->
+<!-- III · INTERACCIONES -->
 <section class="s" id="iii" data-group="iii">
   <div class="kicker"><span class="sec">III</span>Dinámicas de interacción y APIs de equipo</div>
-  <h2>Discover-to-Establish y el rol del Enabling Team</h2>
-  <p>Las fronteras del rediseño solo se sostienen si la comunicación entre equipos es explícita. Cada relación tiene un modo declarado, una duración y un criterio de salida, y la comunicación «todos con todos» queda restringida. Se usan los mismos colores del diagrama TO-BE: <span class="tag red">Colaboración</span><span class="tag amber">Facilitación</span><span class="tag green">X-as-a-Service</span></p>
-
-  <h3 style="margin-top:2rem">3.1 Plataforma ↔ stream piloto: de Colaboración a X-as-a-Service</h3>
-  <p>Se propone <strong>Comercios</strong> como piloto: tiene alto volumen de cambios, menor criticidad que autorización y no procesa datos de tarjeta, así que un error en la primera versión de la plataforma no afecta el perímetro PCI DSS. Su servicio <code>merchant-onboarding</code> es el caso real sobre el que se descubre qué debe ofrecer el portal.</p>
-  <div class="grid compare-grid" style="margin:1rem 0 1.2rem">
-    <div class="card accent"><h3>Qué aporta la Plataforma</h3><p>El sub-equipo <b>Entrega</b> trabaja dentro del repositorio del piloto: IaC, pipeline GitOps, Kubernetes y BD como servicio. Observa dónde se atasca el desarrollador y lo convierte en plantillas y documentación.</p></div>
-    <div class="card accent"><h3>Qué aporta Comercios</h3><p>Un servicio real con dolor real: tiempos de espera, pasos manuales y errores del pase actual. Prueba cada versión del portal y mide su DevEx. Durante la colaboración la responsabilidad del resultado es conjunta; al cerrar, cada repositorio vuelve a tener un solo dueño.</p></div>
-  </div>
+  <h2>Descubrir juntos y transferir capacidad hasta alcanzar autonomía</h2>
+  <h3 id="piloto">3.1 Discover-to-Establish con Alta de comercios</h3>
+  <p>El piloto es el equipo de Alta de comercios, de ocho personas. Se supone que su servicio procesa onboarding sin datos de tarjeta y tiene cambios frecuentes. Entrega y el piloto comparten temporalmente el resultado de construir un <i>walking skeleton</i>. Runtime aporta la infraestructura y la BD gestionada. El comité reserva capacidad para el aprendizaje y acepta una reducción temporal de entrega funcional.</p>
   <div class="tw"><table>
-    <thead><tr><th>Fase</th><th>Modo</th><th>Duración</th><th>Actividades</th><th>Entregable</th></tr></thead>
+    <thead><tr><th>Fase y horizonte</th><th>Modo y actividades</th><th>Evidencia de avance</th></tr></thead>
     <tbody>
-      <tr><td>Descubrir</td><td><span class="tag red">Colaboración</span></td><td>Semanas 0–6</td><td>Event storming del aprovisionamiento y del pase a producción actual. Pairing y mobbing en el repositorio del piloto. Colaboración intermitente: dos o tres días por semana juntos y el resto por separado, para evitar el pensamiento grupal. Fronteras difusas y responsabilidad conjunta.</td><td>Walking skeleton: <code>merchant-onboarding</code> con pipeline, entorno, BD propia y observabilidad creados desde el portal</td></tr>
-      <tr><td>Estabilizar</td><td><span class="tag red">Colaboración</span> en cierre</td><td>Semanas 6–10</td><td>El piloto crea un segundo servicio (<code>pricing</code>) por su cuenta y la plataforma reduce el pairing a revisiones puntuales. La frontera pasa de difusa a explícita.</td><td>API del portal v1.0, documentación por tareas y SLO de la plataforma</td></tr>
-      <tr><td>Establecer</td><td><span class="tag green">X-as-a-Service</span></td><td>Semana 10 en adelante</td><td>Consumo en autoservicio, soporte asíncrono y sin reuniones de coordinación. Las necesidades nuevas entran al roadmap público de la plataforma.</td><td>Catálogo de capacidades abierto a todos los streams</td></tr>
+      <tr><td>Descubrir<br>Semanas 0–6</td><td><b>Colaboración.</b> Mapear el flujo actual, codiseñar la interfaz y hacer pairing dos o tres días por semana sobre <code>merchant-onboarding</code>. Ambos equipos responden por el resultado.</td><td>Servicio funcional con pipeline, entorno, BD propia y telemetría. Backlog de fricciones y primera documentación por tareas.</td></tr>
+      <tr><td>Estabilizar<br>Semanas 6–10</td><td><b>Colaboración en retirada.</b> El piloto ejecuta restauración y rollback. El equipo de Tarifas prueba crear <code>pricing</code> siguiendo la documentación. La ayuda recibida queda registrada como fricción.</td><td>Contrato del portal v1, pruebas de autoservicio y SLO acordados. La interfaz sirve a un segundo equipo.</td></tr>
+      <tr><td>Establecer<br>Desde semana 10, al cumplir la salida</td><td><b>X-as-a-Service.</b> Cada equipo posee sus servicios. Consume el portal y usa soporte asíncrono. Las nuevas necesidades se priorizan en el roadmap.</td><td>Dos semanas sin pasos manuales de Plataforma, creación autónoma por Tarifas y despliegue y recuperación desde el golden path.</td></tr>
     </tbody>
   </table></div>
-  <div class="callout"><h3>El impuesto de la colaboración</h3><p>Durante las semanas 0 a 10, Comercios entrega menos y carga con el contexto de otro equipo. El comité lo acepta de forma explícita porque compra el descubrimiento de necesidades reales, y por eso la colaboración tiene fecha de cierre y no se abre con otros streams en paralelo. Una colaboración perpetua escondería las deficiencias de la plataforma en lugar de resolverlas.</p></div>
-
-  <p class="lbl" style="margin-top:1.6rem">Cuándo el portal se considera estable</p>
-  <ul class="check">
-    <li><b>DevEx:</b> un desarrollador que no participó en el piloto crea y despliega un servicio siguiendo solo la documentación.</li>
-    <li><b>Documentación por tareas:</b> «crear un servicio», «agregar una BD», «rotar un secreto», «revertir un despliegue».</li>
-    <li><b>SemVer como promesa:</b> los cambios incompatibles solo llegan en versión mayor, con aviso y periodo de migración.</li>
-    <li><b>Evolución curada:</b> roadmap público con prioridades basadas en el uso y el dolor de los streams.</li>
-    <li><b>Uno a muchos:</b> un segundo stream adopta el portal sin que la plataforma tenga que cambiar su API.</li>
-  </ul>
-
-  <p class="lbl" style="margin-top:1.6rem">API de equipo de la plataforma</p>
+  <div class="callout g"><h3>Criterio de salida observable</h3><p>Tarifas crea y despliega su servicio con la documentación, los entornos del piloto se aprovisionan en menos de una hora y el 100 % de sus despliegues durante dos semanas utiliza el golden path. Los equipos ejecutan un rollback y una restauración de prueba. Estas son metas propuestas. Una dependencia manual pendiente mantiene abierta la colaboración y se revisa con el comité.</p></div>
+  <h3 style="margin-top:1.6rem">API de equipo de Plataforma</h3>
   <div class="tw"><table>
-    <thead><tr><th>Elemento</th><th>Contenido</th></tr></thead>
+    <thead><tr><th>Elemento</th><th>Compromiso</th></tr></thead>
     <tbody>
-      <tr><td>Capacidades</td><td>Crear un servicio desde plantilla, crear un entorno efímero, aprovisionar la BD del servicio, desplegar con GitOps y canary, gestionar secretos, consultar tableros y SLO</td></tr>
-      <tr><td>Interfaz</td><td>Portal del desarrollador (p. ej., Backstage con plantillas de software), CLI y plantillas de repositorio, todas sobre la misma API</td></tr>
-      <tr><td>Promesa</td><td>SemVer, notas de versión y SLO de la plataforma: disponibilidad del pipeline y aprovisionamiento en menos de 1 hora</td></tr>
-      <tr><td>Canales</td><td>Documentación por tareas, canal asíncrono de soporte, office hours semanales y solicitudes al roadmap</td></tr>
-      <tr><td>Lo que no hace</td><td>No despliega por los streams, no atiende tickets de aprovisionamiento y no aprueba cambios: los guardrails están en el código</td></tr>
+      <tr><td>Capacidades e interfaz</td><td>Crear servicio, entorno y BD, desplegar, restaurar, rotar secretos y consultar telemetría mediante portal, CLI y plantillas sobre la misma API.</td></tr>
+      <tr><td>Versiones y documentación</td><td>SemVer, notas de versión, guías por tarea y aviso con periodo de migración para cambios incompatibles. El consumidor participa en la validación del contrato.</td></tr>
+      <tr><td>Servicio y soporte</td><td>Objetivo de aprovisionamiento menor a una hora para el piloto. SLO de disponibilidad del pipeline acordado antes de su adopción. Canal asíncrono, office hours y ruta de incidentes con responsable de guardia.</td></tr>
+      <tr><td>Roadmap y revisión</td><td>Prioridades basadas en adopción, tiempos, tickets e investigación de DevEx. La fricción recurrente abre una colaboración acotada con resultado y fecha de revisión.</td></tr>
     </tbody>
   </table></div>
-
-  <div class="cols">
-    <div><div class="lbl">Criterios de salida de la colaboración</div><p>El piloto crea y despliega un segundo servicio sin ayuda; aprovisionar un entorno toma menos de 1 hora; al menos el 80 % de sus despliegues pasa por el golden path; dos semanas seguidas sin tickets ni peticiones manuales a la plataforma.</p></div>
-    <div><div class="lbl">Señales para volver a colaborar</div><p>Reaparecen tickets o peticiones manuales, algún stream construye atajos propios, o cae la adopción o el puntaje de DevEx. La fricción se trata como señal de que una frontera está mal ubicada o falta una capacidad (ver 3.4).</p></div>
-  </div>
-
-  <p class="lbl" style="margin-top:1.6rem">Del piloto al resto: adopción por olas</p>
-  <div class="tw"><table>
-    <thead><tr><th>Ola</th><th>Streams</th><th>Modo</th><th>Por qué en ese orden</th></tr></thead>
-    <tbody>
-      <tr><td>0 · Semanas 0–10</td><td>Comercios</td><td><span class="tag red">Colaboración</span></td><td>Descubre las necesidades; está fuera del perímetro de tarjeta</td></tr>
-      <tr><td>1 · Meses 3–5</td><td>Disputas y contracargos, Riesgo y fraude</td><td><span class="tag amber">Facilitación</span></td><td>Streams de tipo Servicio fuera del camino crítico de autorización: validan que el portal no solo sirve al piloto</td></tr>
-      <tr><td>2 · Meses 5–9</td><td>Liquidación y conciliación, Adquirencia y autorización</td><td><span class="tag amber">Facilitación</span></td><td>Los más críticos y dependientes del núcleo: llegan cuando la API del núcleo y el segmento PCI de la plataforma están estables</td></tr>
-    </tbody>
-  </table></div>
-  <p class="muted" style="margin-top:.8rem">La plataforma facilita a 1 o 2 streams a la vez, durante 4 a 6 semanas cada uno, con talleres y pairing sobre el portal ya estable. Cuando el stream despliega sin ayuda por el golden path, la relación pasa a X-as-a-Service.</p>
-
-  <h3 style="margin-top:2.4rem">3.2 Enabling Team de Seguridad (desde los 5 auditores)</h3>
-  <p>El equipo deja de ser el último control antes del pase y pasa a <strong>Facilitación</strong>: transfiere capacidad a los streams para que la seguridad de su aplicación sea suya, y define las reglas que la plataforma ejecuta de forma automática.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Dimensión</th><th>Hoy · silo de auditoría</th><th>Mañana · Enabling Team</th></tr></thead>
-    <tbody>
-      <tr><td>Momento</td><td>Un día antes del pase a producción</td><td>Desde el diseño (threat modeling) y en cada PR</td></tr>
-      <tr><td>Mecanismo</td><td>Revisión estática manual del entregable</td><td>Reglas como código que la plataforma ejecuta en el pipeline</td></tr>
-      <tr><td>Resultado</td><td>Rechazo del entregable completo</td><td>Hallazgo en el PR en minutos, sobre un cambio pequeño</td></tr>
-      <tr><td>Quién corrige</td><td>El equipo, en lote, tras el rechazo</td><td>El stream, con su champion, dentro del mismo flujo</td></tr>
-      <tr><td>Rol del especialista</td><td>Aprobar o rechazar</td><td>Enseñar, curar el conocimiento y mantener las políticas</td></tr>
-      <tr><td>Relación</td><td>Control externo permanente</td><td>Facilitación temporal con fecha de salida por stream</td></tr>
-    </tbody>
-  </table></div>
-
-  <p class="lbl" style="margin-top:1.6rem">Organización de los 5</p>
-  <div class="grid three-grid">
-    <div class="card"><h3>Pareja A · Facilitación</h3><p>Rota por los streams según las olas. Atiende un stream a la vez, en la trinchera con su equipo.</p></div>
-    <div class="card"><h3>Pareja B · Facilitación PCI</h3><p>Empieza por el perímetro de datos de tarjeta: Núcleo Transaccional y Adquirencia (tokenización y 3-D Secure). Luego rota como la pareja A.</p></div>
-    <div class="card"><h3>Políticas y cumplimiento · 1</h3><p>Colabora con la plataforma: mantiene el repositorio de políticas como código, mapea los controles PCI DSS a reglas del pipeline y acompaña la auditoría externa.</p></div>
-  </div>
-
-  <p class="lbl" style="margin-top:1.6rem">Ciclo de facilitación con cada stream (4 a 8 semanas)</p>
+  <h3 id="habilitadores" style="margin-top:1.8rem">3.2 Seguridad facilita DevSecOps y Datos facilita la extracción</h3>
+  <p>Los cinco auditores forman un equipo habilitador. Dos parejas trabajan con un equipo receptor cada una y una persona mantiene el catálogo de políticas y coordina evidencia de cumplimiento. Cada intervención dura de cuatro a ocho semanas y termina cuando el receptor demuestra autonomía.</p>
   <ol class="equipo-steps">
-    <li><b>1. Diagnóstico · semanas 1–2</b>Threat modeling del flujo junto con el stream, línea base de hallazgos del pipeline y elección del security champion.</li>
-    <li><b>2. En la trinchera · semanas 2–5</b>Pairing sobre correcciones reales, en las que el stream escribe el código. Dojos de codificación segura con casos del propio dominio y un walking skeleton seguro: secretos, mTLS y autenticación entre servicios.</li>
-    <li><b>3. Retirada gradual · semanas 5–8</b>El champion lidera el threat modeling del siguiente cambio y el habilitador solo revisa.</li>
-    <li><b>4. Salida</b>El champion corrige hallazgos críticos sin ayuda, el stream mantiene su threat model y la pareja pasa al siguiente stream. Queda la comunidad de champions como canal asíncrono.</li>
+    <li><b>Diagnóstico y diseño</b>Threat modeling del flujo real, línea base de hallazgos y selección de un security champion por equipo. Se acuerdan objetivos de aprendizaje.</li>
+    <li><b>Práctica acompañada</b>Talleres y pairing sobre correcciones reales, secretos y autenticación. El equipo receptor implementa y conserva la propiedad de su código.</li>
+    <li><b>Retirada gradual</b>El champion dirige el siguiente threat model y resuelve los hallazgos. El habilitador observa y devuelve retroalimentación.</li>
+    <li><b>Salida verificable</b>El receptor corrige un hallazgo crítico o un ejercicio equivalente, mantiene su modelo de amenazas y produce evidencia de controles. La pareja pasa al siguiente equipo.</li>
   </ol>
-
-  <div class="tw" style="margin-top:1.4rem"><table>
-    <thead><tr><th>Ola</th><th>Pareja A</th><th>Pareja B</th><th>Criterio</th></tr></thead>
+  <div class="tw" style="margin-top:1.2rem"><table>
+    <thead><tr><th>Responsabilidad</th><th>Seguridad</th><th>Plataforma</th><th>Equipo receptor</th></tr></thead>
     <tbody>
-      <tr><td>1 · Meses 0–3</td><td>Comercios, junto con el piloto de plataforma</td><td>Núcleo Transaccional y Adquirencia: threat modeling del perímetro de tarjeta, llaves y segregación de funciones</td><td>Máximo riesgo PCI primero. Comercios valida los controles del golden path mientras nacen; en el núcleo y Adquirencia la evidencia en el pipeline llega con el segmento PCI de la plataforma, en la fase 2</td></tr>
-      <tr><td>2 · Meses 3–6</td><td>Riesgo y fraude</td><td>Liquidación y conciliación; evidencia PCI del núcleo en el segmento PCI ya construido</td><td>Datos financieros sensibles y reportes regulatorios</td></tr>
-      <tr><td>3 · Meses 6–9</td><td>Disputas y contracargos</td><td>Refuerzo del núcleo y de la comunidad de champions</td><td>Cierre del primer ciclo: los 5 streams con champion activo</td></tr>
+      <tr><td>Controles</td><td>Publica reglas y umbrales versionados.</td><td>Ejecuta las reglas en el pipeline y conserva resultados.</td><td>Corrige hallazgos dentro del flujo de desarrollo.</td></tr>
+      <tr><td>Aprendizaje</td><td>Facilita temporalmente, cura guías y acompaña al champion.</td><td>Proporciona plantillas seguras y entornos de práctica.</td><td>Implementa, opera y demuestra la capacidad adquirida.</td></tr>
+      <tr><td>Excepciones</td><td>Analiza el riesgo de forma asíncrona.</td><td>Aplica únicamente excepciones registradas y vigentes.</td><td>Documenta alcance, mitigación y vencimiento. El responsable de riesgo designado acepta el riesgo.</td></tr>
+      <tr><td>Entrega segura</td><td>Define la política y valida su cobertura.</td><td>Automatiza controles y exige revisión por una persona distinta del autor.</td><td>Realiza revisión entre pares y conserva evidencia de su servicio.</td></tr>
     </tbody>
   </table></div>
-  <p class="muted" style="margin-top:.8rem">El orden es distinto al de la adopción del portal a propósito: Seguridad prioriza por riesgo y la Plataforma por menor impacto de una falla. Ambos coinciden en empezar por Comercios.</p>
-
-  <p class="lbl" style="margin-top:1.6rem">Frontera entre Seguridad, Plataforma y streams</p>
-  <div class="tw"><table>
-    <thead><tr><th>Actividad</th><th>Seguridad · Enabling</th><th>Plataforma</th><th>Stream</th></tr></thead>
+  <p style="margin-top:1rem">Un hallazgo crítico activa un bloqueo automático temprano con diagnóstico accionable. Las entregas ordinarias avanzan al cumplir las políticas. Los incumplimientos y excepciones se resuelven por el mecanismo publicado. Seguridad evalúa el aprendizaje por autonomía del receptor, detección temprana y tiempo de corrección.</p>
+  <p style="margin-top:.8rem">La API del habilitador incluye calendario de intervenciones priorizadas por riesgo, objetivos de aprendizaje, guías, comunidad de champions y canal de consulta. Comienza con el piloto y el perímetro del Núcleo. Las parejas atienden como máximo dos equipos simultáneamente y rotan por los quince equipos stream-aligned y el Núcleo según capacidad.</p>
+  <div class="callout"><h3>Destino de los especialistas</h3><p>Seguridad conserva la curaduría de políticas y ofrece nuevas intervenciones con fecha de salida cuando aparecen brechas. Los tres DBAs forman un habilitador temporal de Datos, con hasta dos equipos receptores a la vez, para transferir modelado, migraciones y recuperación. Los equipos receptores ejecutan las extracciones. Cuando sale el último contexto de la BD compartida, los DBAs se integran a Runtime y datos, que pasa de cinco a ocho integrantes.</p></div>
+  <h3 id="interacciones" style="margin-top:1.8rem">3.3 Contratos de interacción y condición de cambio</h3>
+  <p>Los identificadores R1–R10 corresponden al diagrama. Colaboración implica cocreación temporal, Facilitación transfiere habilidades y X-as-a-Service permite consumir una capacidad mediante un contrato estable.</p>
+  <p class="table-hint">Desliza la tabla horizontalmente para consultar las tres columnas.</p>
+  <div class="tw" tabindex="0" role="region" aria-label="Contratos de interacción, tabla desplazable"><table class="interaction-table">
+    <thead><tr><th>Relación</th><th>Descubrimiento o adopción</th><th>Estado posterior y condición de cambio</th></tr></thead>
     <tbody>
-      <tr><td>Reglas y umbrales</td><td>Las define y versiona como código, por PR</td><td>Revisa su impacto en la DevEx</td><td>Propone ajustes</td></tr>
-      <tr><td>Controles (SAST, SCA, secretos, imágenes, políticas de despliegue)</td><td>—</td><td>Los ejecuta en el golden path como servicio</td><td>Ve los resultados en su PR</td></tr>
-      <tr><td>Corrección de hallazgos</td><td>Enseña, en pairing</td><td>—</td><td>Es dueño de la corrección</td></tr>
-      <tr><td>Excepciones</td><td>Revisa de forma asíncrona</td><td>Aplica la excepción declarada en el repositorio</td><td>La pide como código, con fecha de vencimiento</td></tr>
-      <tr><td>Evidencia PCI DSS</td><td>Mapea controles y acompaña la auditoría</td><td>Genera evidencia automática: logs del pipeline y revisiones de PR</td><td>Mantiene su threat model</td></tr>
-      <tr><td>Segregación de funciones</td><td>Define la regla</td><td>Exige revisión de un par distinto del autor y despliegue solo por pipeline</td><td>Hace la revisión entre pares</td></tr>
+      <tr><td><b>R1</b> Plataforma ↔ piloto</td><td>Colaboración, semanas 0–10 estimadas. Alta de comercios codiseña y Tarifas valida adopción.</td><td>X-as-a-Service al cumplir las pruebas de autonomía de 3.1.</td></tr>
+      <tr><td><b>R2</b> Plataforma ↔ demás equipos stream-aligned</td><td>Facilitación de cuatro a seis semanas por equipo, con hasta dos equipos en adopción simultánea.</td><td>X-as-a-Service cuando crean, despliegan y recuperan su servicio con documentación.</td></tr>
+      <tr><td><b>R3</b> Plataforma ↔ Núcleo</td><td>Colaboración para segmento de tarjeta, HSM y controles reforzados, prevista en meses 3–5.</td><td>X-as-a-Service tras validar controles, aislamiento y operación del segmento desde el portal.</td></tr>
+      <tr><td><b>R4</b> Núcleo ↔ Adquirencia y Liquidación</td><td>Colaboración acotada para API de pagos, tokenización y contratos del ledger.</td><td>X-as-a-Service con contrato v1 probado, simulador y SLO acordados antes de su adopción productiva.</td></tr>
+      <tr><td><b>R5</b> Núcleo ↔ Riesgo y Disputas</td><td>Colaboración para contrato de scoring en línea y ejecución de reembolsos.</td><td>X-as-a-Service tras pruebas de contrato, fallos y latencia. Cada proveedor posee su API.</td></tr>
+      <tr><td><b>R6</b> Equipo stream-aligned ↔ otro equipo stream-aligned</td><td>Colaboración temporal al descubrir una frontera compartida, como Tarifas ↔ Liquidación.</td><td>X-as-a-Service al publicar contrato versionado y comprobar cambios compatibles independientes.</td></tr>
+      <tr><td><b>R7</b> Seguridad ↔ Plataforma</td><td>Colaboración para codiseñar el catálogo de políticas y su integración.</td><td>X-as-a-Service. Plataforma consume el catálogo versionado de Seguridad con pruebas de compatibilidad.</td></tr>
+      <tr><td><b>R8</b> Datos ↔ Plataforma</td><td>Colaboración para diseñar BD gestionada, migraciones y recuperación. Cierra al probar la capacidad.</td><td>Finaliza la colaboración. Datos continúa facilitando extracciones y se integra en Plataforma al retirar la BD compartida.</td></tr>
+      <tr><td><b>R9</b> Seguridad ↔ equipos stream-aligned y Núcleo</td><td>Facilitación de cuatro a ocho semanas por receptor.</td><td>Finaliza la intervención al demostrar autonomía. Comunidad de champions y nuevas intervenciones según brechas.</td></tr>
+      <tr><td><b>R10</b> Datos ↔ equipos stream-aligned y Núcleo</td><td>Facilitación por contexto, con objetivo y fecha de revisión definidos antes de empezar.</td><td>Finaliza cuando el receptor opera y recupera su almacén y el contexto deja de depender de la BD compartida.</td></tr>
     </tbody>
   </table></div>
-  <ul class="check">
-    <li>Un hallazgo crítico detiene el PR en minutos; uno alto se corrige dentro de un plazo acordado; los medios y bajos van al backlog del stream sin frenar el flujo.</li>
-    <li>La segregación de funciones la garantizan la revisión entre pares y el despliegue automatizado, no un equipo separado que despliega.</li>
-    <li>El habilitador no toma tickets, no escribe código de producción y no aprueba pases.</li>
-  </ul>
-
-  <p class="lbl" style="margin-top:1.6rem">API de equipo del habilitador</p>
-  <div class="tw"><table>
-    <thead><tr><th>Elemento</th><th>Contenido</th></tr></thead>
-    <tbody>
-      <tr><td>Cómo se pide</td><td>Calendario de olas publicado; las solicitudes nuevas se priorizan por riesgo</td></tr>
-      <tr><td>Artefactos</td><td>Catálogo de threat models, guías por tarea, walking skeletons seguros y repositorio de políticas</td></tr>
-      <tr><td>Canales</td><td>Comunidad de champions, office hours y revisión asíncrona de excepciones</td></tr>
-      <tr><td>Métricas</td><td>Cero rechazos de último minuto; porcentaje de hallazgos críticos detectados en PR frente a producción; tiempo de corrección de críticos; streams con champion activo; controles PCI con evidencia automática</td></tr>
-    </tbody>
-  </table></div>
-  <div class="callout"><h3>Qué permanece y qué desaparece</h3><p>Legacy-Pay está sujeta a PCI DSS, así que la función de seguridad no se extingue: la extinción es por stream, no del equipo. Los 5 se mantienen como Enabling Team rotativo que mantiene las políticas como código junto con la plataforma, forma nuevos champions y acompaña la auditoría externa con la evidencia del pipeline. Lo que desaparece es el control de bloqueo de última hora, no la seguridad.</p></div>
-
-  <h3 style="margin-top:2.4rem">3.3 Matriz de interacciones en el tiempo</h3>
-  <div class="tw"><table>
-    <thead><tr><th>Relación</th><th>t0 · transición</th><th>t1 · estable</th><th>Criterio de cambio</th></tr></thead>
-    <tbody>
-      <tr><td>Plataforma ↔ Comercios (piloto)</td><td><span class="tag red">Colaboración</span> semanas 0–10</td><td><span class="tag green">X-as-a-Service</span></td><td>Criterios de salida de 3.1</td></tr>
-      <tr><td>Plataforma ↔ demás streams</td><td><span class="tag amber">Facilitación</span> por olas, 1 o 2 a la vez</td><td><span class="tag green">X-as-a-Service</span></td><td>El stream despliega sin ayuda por el golden path</td></tr>
-      <tr><td>Plataforma ↔ Núcleo Transaccional</td><td><span class="tag red">Colaboración</span> meses 3–5, segmento PCI: red aislada, HSM y pipeline con controles reforzados</td><td><span class="tag green">X-as-a-Service</span></td><td>El segmento PCI se ofrece desde el portal como variante del golden path</td></tr>
-      <tr><td>Núcleo ↔ Adquirencia y Liquidación</td><td><span class="tag red">Colaboración</span> diseñar la API de autorización y del ledger</td><td><span class="tag green">X-as-a-Service</span></td><td>API publicada con SemVer, SLO y simulador de redes</td></tr>
-      <tr><td>Núcleo ↔ Riesgo y Disputas</td><td><span class="tag green">X-as-a-Service</span> desde el inicio</td><td><span class="tag green">X-as-a-Service</span></td><td>Consumen la API y los eventos ya publicados</td></tr>
-      <tr><td>Stream ↔ stream</td><td><span class="tag green">X-as-a-Service</span> por APIs y eventos; <span class="tag red">Colaboración</span> acotada solo donde los dominios se superponen (p. ej., Adquirencia ↔ Riesgo en el scoring en línea)</td><td><span class="tag green">X-as-a-Service</span></td><td>Contrato del evento versionado</td></tr>
-      <tr><td>Seguridad ↔ Plataforma</td><td><span class="tag red">Colaboración</span> definir los controles del golden path</td><td><span class="tag green">X-as-a-Service</span> la plataforma ejecuta los controles y Seguridad los mantiene como código por PR</td><td>Primera versión del catálogo de políticas en el pipeline</td></tr>
-      <tr><td>Seguridad ↔ streams</td><td><span class="tag amber">Facilitación</span> rotativa por olas</td><td>Sin interacción; comunidad de champions</td><td>Champion autónomo</td></tr>
-      <tr><td>Seguridad ↔ Núcleo</td><td><span class="tag amber">Facilitación</span> perímetro PCI DSS, llaves y segregación de funciones</td><td>Sin interacción</td><td>El núcleo mantiene su evidencia</td></tr>
-      <tr><td>Datos ↔ streams</td><td><span class="tag amber">Facilitación</span> extraer su BD con strangler</td><td>Sin interacción</td><td>Contexto fuera de la BD monolítica</td></tr>
-      <tr><td>Datos ↔ Núcleo</td><td><span class="tag amber">Facilitación</span> extraer el ledger: CDC, doble escritura y conciliación</td><td>Sin interacción</td><td>Ledger conciliado sin diferencias</td></tr>
-      <tr><td>Datos ↔ Plataforma</td><td><span class="tag red">Colaboración</span> diseñar la BD por servicio</td><td><span class="tag green">X-as-a-Service</span></td><td>BD por servicio disponible en el portal</td></tr>
-    </tbody>
-  </table></div>
-  <div class="callout g"><h3>Destino de los 3 DBAs</h3><p>Su rol de habilitadores es temporal: cuando el último contexto sale de la BD monolítica, se integran al sub-equipo <b>Runtime y datos</b> de la plataforma, donde operan la BD como servicio. Así el conocimiento de datos se queda en la organización como capacidad de autoservicio y no vuelve a ser un silo de tickets.</p></div>
-
-  <h3 style="margin-top:2.4rem">3.4 La fricción como señal</h3>
-  <p>Una interacción incómoda entre equipos indica que una frontera está mal ubicada o que falta una capacidad. El comité revisa estas señales cada trimestre y ajusta la matriz.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Síntoma</th><th>Qué indica</th><th>Acción</th></tr></thead>
-    <tbody>
-      <tr><td>Reaparecen tickets a la plataforma</td><td>Falta una capacidad o la DevEx es mala</td><td>Colaboración acotada para descubrirla y luego X-as-a-Service</td></tr>
-      <tr><td>Atajos que evitan el golden path</td><td>El atajo es más rápido que el camino dorado</td><td>Medir la DevEx y priorizarlo en el roadmap; no prohibir</td></tr>
-      <tr><td>Un stream espera al núcleo en cada cambio</td><td>API insuficiente o frontera mal ubicada</td><td>Revisar la API del núcleo; no aceptar tickets</td></tr>
-      <tr><td>Dos streams se coordinan en cada sprint</td><td>Dominios superpuestos</td><td>Colaboración temporal y redibujar la frontera con event storming</td></tr>
-      <tr><td>Una colaboración pasa de su fecha</td><td>Plataforma inmadura enmascarada</td><td>Revisar los criterios de salida en el comité</td></tr>
-      <tr><td>El champion escala todo al habilitador</td><td>Facilitación incompleta</td><td>Extender una iteración la facilitación, sin asumir el trabajo del stream</td></tr>
-    </tbody>
-  </table></div>
-  <div class="callout g"><h3>Gobierno de las interacciones</h3><p>Cada cambio de modo se publica junto con su criterio, y la matriz se revisa cada trimestre. La regla es que ninguna relación quede en Colaboración sin fecha de cierre ni en Facilitación sin criterio de salida: el estado estable es X-as-a-Service o, para los habilitadores, ninguna interacción.</p></div>
+  <h3 style="margin-top:1.6rem">3.4 Fricción como señal de ajuste</h3>
+  <p>El comité revisa mensualmente el piloto y trimestralmente la topología. Las solicitudes manuales recurrentes priorizan una capacidad de Plataforma. La coordinación obligatoria entre equipos en cada entrega activa una revisión de fronteras y contratos. Una cola creciente del Núcleo exige revisar alcance, capacidad y autoservicio. Cada colaboración tiene un resultado y fecha de revisión. Cada facilitación termina con una demostración de autonomía.</p>
 </section>
 
 <!-- CIERRE -->
 <section class="s" id="cierre" data-group="cierre">
   <div class="kicker">Cierre del comité</div>
-  <h2>Hoja de ruta, riesgos y supuestos de la transición</h2>
-  <p>La transición avanza por criterios de salida, no por fechas: cada fase termina cuando sus indicadores se cumplen. Los horizontes son una estimación del comité.</p>
-
-  <h3 style="margin-top:2rem">Trazabilidad: del diagnóstico al rediseño</h3>
+  <h2>Avanzar por evidencia de autonomía y seguridad</h2>
+  <p>El comité propone iniciar el piloto y redistribuir gradualmente propiedad y permisos. Cada fase se cierra con evidencia. Los horizontes de 0–3, 3–12 y 12–18 meses son estimaciones que se revisan según carga de trabajo, aprendizaje y riesgo.</p>
+  <h3 id="hoja-ruta" style="margin-top:1.4rem">Hoja de ruta y decisiones de avance</h3>
   <div class="tw"><table>
-    <thead><tr><th>Problema · I</th><th>Qué lo reemplaza</th><th>Equipo y modo</th><th>Métrica · hoy → meta</th></tr></thead>
+    <thead><tr><th>Fase</th><th>Resultado y responsables</th><th>Condición de avance</th></tr></thead>
     <tbody>
-      <tr><td>Traspaso Dev → DBA</td><td>BD por servicio con migraciones versionadas en el pipeline; strangler sobre la BD monolítica</td><td>Stream dueño de su esquema · Plataforma: BD como servicio <span class="tag green">X-as-a-Service</span> · Datos <span class="tag amber">Facilitación</span></td><td>Cambio de esquema: SLA de 2 semanas → mismo día, dentro del PR</td></tr>
-      <tr><td>Traspaso Dev → Seguridad</td><td>Threat modeling en el diseño y controles como código en cada PR</td><td>Stream con champion · Seguridad <span class="tag amber">Facilitación</span> · Plataforma ejecuta <span class="tag green">X-as-a-Service</span></td><td>Rechazos de último minuto: frecuentes → cero; hallazgos críticos detectados en el PR</td></tr>
-      <tr><td>Traspaso Dev → Operaciones</td><td>Golden path de CI/CD con GitOps, canary y rollback automático</td><td>Stream despliega · Plataforma <span class="tag red">Colaboración</span> → <span class="tag green">X-as-a-Service</span></td><td>Frecuencia: 1 al mes → bajo demanda por servicio; ventana del viernes retirada</td></tr>
-      <tr><td>BD monolítica compartida (1.2)</td><td>Integración por APIs y eventos; ledger extraído al núcleo</td><td>Streams · Núcleo <span class="tag green">X-as-a-Service</span> · Datos <span class="tag amber">Facilitación</span></td><td>Unidad de liberación: sistema completo → cada servicio</td></tr>
+      <tr><td><b>1 · Descubrir</b><br>Meses 0–3</td><td>Entrega y Alta de comercios construyen el piloto. Tarifas prueba adopción. Runtime automatiza infraestructura y el despliegue del monolito. Seguridad define políticas y modelos de amenazas. Datos inventaría consumidores y prepara las extracciones.</td><td>Piloto y Tarifas demuestran autonomía según 3.1. Controles generales ejecutados en el pipeline. La evidencia específica del segmento de tarjeta se completa en fase 2.</td></tr>
+      <tr><td><b>2 · Estabilizar y extender</b><br>Meses 3–12</td><td>Runtime y Núcleo validan el segmento de tarjeta, previsto en meses 3–5. Núcleo y consumidores publican contratos. Entrega facilita adopción por equipos. Seguridad y Datos acompañan intervenciones según su capacidad.</td><td>Cada servicio adopta producción al probar contrato, controles y recuperación. El piloto se extiende primero al Portal de comercios y Evidencias. Scoring en línea, Adquirencia y procesos monetarios avanzan después de validar sus dependencias críticas.</td></tr>
+      <tr><td><b>3 · Consolidar</b><br>Meses 12–18</td><td>Los propietarios completan la extracción de contextos y la retirada de la BD compartida. Los DBAs se integran a Runtime y datos. Plataforma y Núcleo operan sus contratos X-as-a-Service. Los habilitadores cierran intervenciones al alcanzar autonomía.</td><td>Despliegues independientes por servicio, datos con propietario único y recuperación probada. La ventana común se retira cuando toda entrega utiliza una ruta automatizada validada. Las métricas permiten revisar la mejora.</td></tr>
     </tbody>
   </table></div>
-  <p class="muted" style="margin-top:.8rem">Las metas son objetivos del comité. La tasa de fallos y el tiempo de recuperación no tienen línea base en el caso y se empiezan a medir en la fase 1.</p>
-
-  <h3 style="margin-top:2.4rem">Hoja de ruta</h3>
+  <h3 id="metricas" style="margin-top:1.6rem">Trazabilidad y métricas de resultado</h3>
   <div class="tw"><table>
-    <thead><tr><th>Fase</th><th>Horizonte</th><th>Hitos</th><th>Criterio de salida</th></tr></thead>
+    <thead><tr><th>Problema y decisión</th><th>Línea base</th><th>Meta y evidencia</th></tr></thead>
     <tbody>
-      <tr><td>1 · Fundaciones</td><td>Meses 0–3</td><td>Platform Team con su TVP y el piloto Comercios en Colaboración. Inventario de scripts y pase del viernes del monolito automatizado. Seguridad define con Plataforma los controles del golden path y forma los primeros champions en Comercios, Adquirencia y el núcleo (perímetro PCI). Habilitador de Datos modela el nuevo esquema del ledger.</td><td>El piloto despliega sin ayuda; entorno en menos de 1 hora; 80 % de sus despliegues por el golden path.</td></tr>
-      <tr><td>2 · Escalar</td><td>Meses 3–9</td><td>Portal en X-as-a-Service, con Facilitación por olas: Disputas y Riesgo, luego Liquidación y Adquirencia. Plataforma y Núcleo construyen el segmento PCI en Colaboración (meses 3–5). Seguridad continúa con Riesgo, Liquidación y Disputas. Strangler extrae la BD de cada contexto. El núcleo publica su API y extrae el ledger con CDC y doble escritura.</td><td>100 % de los despliegues por el golden path: se retira la ventana del viernes. Ledger conciliado sin diferencias.</td></tr>
-      <tr><td>3 · Establecer</td><td>Meses 9–18</td><td>Todas las relaciones en X-as-a-Service. Seguridad rota como habilitador y los DBAs se integran a Runtime y datos. El monolito queda reducido a contextos residuales.</td><td>Despliegue bajo demanda por servicio, sin tickets; las cuatro métricas DORA medidas por stream.</td></tr>
+      <tr><td>Cola DBA → propiedad de esquema y BD gestionada</td><td>SLA de dos semanas por solicitud.</td><td>Cambio compatible de esquema dentro del flujo del equipo. Medir espera desde PR listo hasta aplicación de la migración.</td></tr>
+      <tr><td>Revisión tardía → DevSecOps y políticas automáticas</td><td>Rechazos frecuentes de entregables el día anterior al pase.</td><td>Cero rechazos por una revisión ordinaria de último minuto. Medir detección en PR, tiempo de corrección y autonomía del champion.</td></tr>
+      <tr><td>Despliegue central → golden path y operación por equipo</td><td>Un despliegue mensual.</td><td>Desplegar bajo demanda por servicio. Medir frecuencia y tiempo desde cambio hasta producción por equipo.</td></tr>
+      <tr><td>Acoplamiento y riesgo → contratos y recuperación probada</td><td>Faltan valores de fallos, recuperación y dependencias técnicas.</td><td>Construir línea base en fase 1. Seguir tasa de fallos de cambios, tiempo de recuperación y proporción de entregas que requieren coordinación.</td></tr>
     </tbody>
   </table></div>
-
-  <h3 style="margin-top:2.4rem">Riesgos y mitigaciones</h3>
+  <h3 style="margin-top:1.6rem">Riesgos que condicionan la transición</h3>
   <div class="tw"><table>
-    <thead><tr><th>Riesgo</th><th>Mitigación</th><th>Señal de alerta</th></tr></thead>
+    <thead><tr><th>Riesgo</th><th>Tratamiento y señal de decisión</th></tr></thead>
     <tbody>
-      <tr><td>«Silo renombrado»: la plataforma vuelve a operar por tickets</td><td>Plataforma como producto, adopción voluntaria y medición de DevEx; la plataforma no custodia accesos</td><td>Reaparecen tickets o peticiones manuales</td></tr>
-      <tr><td>Descuadre de dinero durante la doble escritura del ledger</td><td>CDC, conciliación diaria entre ambas bases, corte por contexto y plan de reversa</td><td>Diferencias en la conciliación diaria</td></tr>
-      <tr><td>Brecha de cumplimiento PCI DSS durante la transición</td><td>Datos de tarjeta concentrados en el núcleo; evidencia continua en el pipeline desde la fase 1; Seguridad acompaña la auditoría externa</td><td>Un control sin evidencia en el pipeline</td></tr>
-      <tr><td>Sobrecarga cognitiva de los streams al asumir la operación</td><td>Golden path, observabilidad por defecto y guardia incorporada de forma gradual</td><td>SLO incumplidos, incidentes repetidos o caída del puntaje de DevEx</td></tr>
-      <tr><td>El núcleo se vuelve un equipo de componentes con colas</td><td>API de autoservicio, simulador de redes y roadmap guiado por los streams</td><td>Peticiones acumuladas o streams esperando al núcleo</td></tr>
-      <tr><td>La colaboración del piloto no termina</td><td>Fecha de cierre y criterios de salida revisados por el comité</td><td>Pairing diario después de la semana 10</td></tr>
-      <tr><td>Seguridad vuelve a ser una compuerta de aprobación</td><td>Políticas como código, excepciones con vencimiento y Seguridad sin aprobación de pases</td><td>PRs esperando revisión manual de Seguridad</td></tr>
-      <tr><td>Resistencia de DBAs, auditores y SysAdmins por pérdida de control</td><td>Rol nuevo explícito para cada silo, formación y destino definido</td><td>Atajos que evitan el golden path o rotación de personal</td></tr>
+      <tr><td>Inconsistencia al extraer el ledger</td><td>Definir una única fuente autorizada de escritura por contexto en cada fase. Replicar mediante CDC con identificadores idempotentes, conciliar y probar el corte. Autorizar el cambio de escritor tras conciliación sin diferencias. El plan de reversa conserva y reconcilia las operaciones aceptadas antes de reabrir escrituras.</td></tr>
+      <tr><td>Controles incompletos en el perímetro de tarjeta</td><td>Validar alcance con Seguridad, conservar controles vigentes y producir evidencia específica en el segmento de fase 2 antes de migrar tráfico. Un control pendiente detiene esa migración.</td></tr>
+      <tr><td>Sobrecarga del Núcleo, Plataforma o habilitadores</td><td>Limitar adopciones e intervenciones simultáneas, formar a los ex-SysAdmins y reservar capacidad para operar el legado. Una cola creciente o incumplimientos del SLO ajustan el alcance y el horizonte de la ola.</td></tr>
+      <tr><td>Contratos insuficientes o autonomía incompleta</td><td>Medir esperas entre equipos y solicitudes manuales. Abrir una colaboración acotada con criterio de salida, actualizar el contrato y comprobar una entrega independiente.</td></tr>
     </tbody>
   </table></div>
-
-  <h3 style="margin-top:2.4rem">Supuestos</h3>
+  <h3 id="supuestos" style="margin-top:1.6rem">Supuestos a validar y decisiones del comité</h3>
   <ul class="check">
-    <li>150 ingenieros: 132 en desarrollo y 18 en los silos. El Núcleo Transaccional se forma con 6 a 8 de los 132.</li>
-    <li>Línea base: 1 despliegue al mes y SLA de 2 semanas para cambios de esquema. No hay cifras de tasa de fallos ni de tiempo de recuperación; se empiezan a medir en la fase 1.</li>
-    <li>Comercios es el piloto por su alto volumen de cambios, su menor criticidad frente a autorización y porque no procesa datos de tarjeta.</li>
-    <li>Los 5 auditores se organizan en dos parejas de facilitación y un responsable de políticas y cumplimiento.</li>
-    <li>La dirección patrocina la redistribución de permisos: los streams despliegan y gestionan su esquema sin aprobación de un silo.</li>
-    <li>Los horizontes de cada fase son estimados; se ajustan según los criterios de salida.</li>
+    <li>La distribución suma 150 personas e incorpora ocho especialistas del Núcleo desde desarrollo. La asignación a equipos y los dominios propuestos se validan con event storming y evaluación de capacidades.</li>
+    <li>Comercios procesa onboarding sin datos de tarjeta. El Núcleo concentra tokenización y procesamiento monetario. Seguridad valida el alcance PCI DSS y las dependencias que puedan afectarlo.</li>
+    <li>La dirección habilita permisos por equipo, formación, guardias y capacidad para sostener la operación durante la migración. Cada incorporación a producción requiere controles y recuperación probados.</li>
+    <li>Las metas y fechas son propuestas. La línea base disponible proviene del caso. El resto de indicadores empieza a medirse con el piloto.</li>
   </ul>
+  <div class="callout g"><h3>Acuerdo propuesto</h3><p>Iniciar Alta de comercios como piloto, asignar propietarios y capacidad de aprendizaje, y evaluar sus criterios de salida antes de extender la plataforma. El comité revisará la evidencia de entrega, carga cognitiva y riesgo para decidir cada siguiente ola.</p></div>
+  <details class="equipo-details"><summary>Referencias y fundamento conceptual</summary><p>Universidad de los Andes. <i>Hoja de trabajo No. 10, ARTI-4219 Arquitectura de Plataformas, 2026-20</i>. Contexto y requisitos del caso.</p><p>Material del curso. <i>S12 – Estructura Organizacional</i>. Maniobra inversa, cuatro topologías, tres modos de interacción y transición evolutiva.</p><p>Skelton, M. y Pais, M. (2019). <i>Team Topologies</i>. IT Revolution. Referencia indicada en el material de clase.</p></details>
 </section>
 
 
@@ -744,7 +730,7 @@ ul.check li:before{content:"✓";position:absolute;left:0;color:var(--accent2);f
 const sections = [...document.querySelectorAll('section.s')];
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => { if(en.isIntersecting) en.target.classList.add('in'); });
-}, {threshold: 0.12});
+}, {threshold: 0});
 sections.forEach(s => io.observe(s));
 
 /* ---------- Navegación activa y barra de progreso ---------- */
@@ -829,7 +815,7 @@ addEventListener('scroll', () => {
     const stops=nodes.map((n,i)=>({x:n.x,y:ly,hold:hold[i],c:nodes[i+1]?{x:(n.x+nodes[i+1].x)/2,y:ly+46}:null}));
     for(let i=0;i<nodes.length-1;i++) curve(stops[i].x,ly,stops[i].c.x,stops[i].c.y,stops[i+1].x,ly,{stroke:'#7A8BA0','stroke-width':2.6,'stroke-dasharray':'5 5','stroke-linecap':'round'},g);
     packets.push({stops,offset:0,el:mk('circle',{r:9,fill:'var(--accent)'},g),last:-1,
-      onStage(s){ if(s===nodes.length-1){ cnt.n++; cnt.el.textContent='silos: '+cnt.n+' despliegues al mes'; } }});
+      onStage(s){ if(s===nodes.length-1){ cnt.n++; cnt.el.textContent='silos · '+cnt.n+' entregas simuladas'; } }});
   }
 
   /* Después: cuatro tipos de equipo con plataforma como base horizontal y tres modos de interacción */
@@ -857,7 +843,7 @@ addEventListener('scroll', () => {
     const LANE=180;
     /* Stream-aligned teams (izquierda) */
     mk('rect',{x:20,y:0,width:280,height:280,rx:30,fill:'var(--card)',stroke:'var(--accent2)','stroke-width':2},g);
-    header(g,40,14,ICON.stream,'var(--accent2)','STREAM-ALIGNED TEAMS',['5 flujos de valor']);
+    header(g,40,14,ICON.stream,'var(--accent2)','STREAM-ALIGNED TEAMS',['15 equipos · 5 flujos de valor']);
     streams.forEach((s,i)=>{
       const y=chipY(i), b=mk('g',{},g), cm=(i===1);
       mk('rect',{x:46,y:y,width:228,height:34,rx:17,fill:cm?'var(--soft)':'var(--card)',stroke:cm?COL.col:'var(--accent2)','stroke-width':cm?2.2:1.2},b);
@@ -908,7 +894,7 @@ addEventListener('scroll', () => {
     streams.forEach((s,i)=>{
       packets.push({stops:[{x:274,y:cy(i),hold:150,c:{x:337,y:(cy(i)+LANE)/2}},{x:400,y:LANE,hold:300},{x:830,y:LANE,hold:200},{x:830,y:76,hold:0}],offset:i*220,
         el:mk('circle',{r:7,fill:i===1?COL.col:COL.xas},g),last:-1,
-        onStage(st){ if(st===3){ cnt.n++; cnt.el.textContent='streams: '+cnt.n+' despliegues esta semana'; } }});
+        onStage(st){ if(st===3){ cnt.n++; cnt.el.textContent='streams · '+cnt.n+' entregas simuladas'; } }});
     });
     packets.push({stops:[{x:274,y:cy(1),hold:200,c:{x:337,y:(cy(1)+LANE)/2}},{x:400,y:LANE,hold:200}],offset:700,el:mk('circle',{r:6,fill:COL.col},g),last:-1});
     packets.push({stops:[{x:400,y:LANE,hold:200,c:{x:337,y:(cy(1)+LANE)/2}},{x:274,y:cy(1),hold:200}],offset:1500,el:mk('circle',{r:6,fill:COL.col},g),last:-1});
