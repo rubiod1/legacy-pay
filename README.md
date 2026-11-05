@@ -10,6 +10,8 @@ Presentación interactiva sobre el rediseño de Legacy-Pay con Team Topologies: 
 
 Para revisar la rama descargada, abre `index.html` en un navegador o ejecuta `python3 -m http.server 8765` desde el repositorio y visita <http://localhost:8765/>. El enlace público de arriba muestra la versión publicada en GitHub Pages.
 
+La vista inicial muestra una síntesis por bloque. Los apartados desplegables conservan el diagnóstico, los mandatos, los contratos y el análisis de transición. En «Contenido», el botón «Mostrar análisis completo» abre todos los apartados. Los enlaces directos a una sección detallada abren su apartado automáticamente. El diseño aprovecha el ancho disponible hasta 1800 píxeles y se adapta a pantallas pequeñas.
+
 ## Correspondencia con la rúbrica
 
 | Criterio | Evidencia en el documento |

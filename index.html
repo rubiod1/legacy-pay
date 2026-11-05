@@ -14,6 +14,8 @@
   --ink:#1B2430; --muted:#5B6670; --line:#C5D0DA;
   --accent:#2D5C7F; --accent2:#4A7A5E; --ochre:#9A6B2F;
   --code:#1B2430;
+  --content-max:1800px;
+  --page-gutter:clamp(20px,4vw,72px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
@@ -36,18 +38,19 @@ body{
 .bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:11;transition:width .2s}
 
 /* ---------- contenedor ---------- */
-.container{max-width:900px;margin:0 auto;padding:0 5vw}
+.container{max-width:calc(var(--content-max) + 2 * var(--page-gutter));margin:0 auto;padding:0 var(--page-gutter)}
 
 /* ---------- secciones ---------- */
 main{position:relative;z-index:1;padding-top:0}
-section.s{position:relative;min-height:100vh;padding:10vh max(5vw,calc((100vw - 900px)/2));display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);opacity:1;transform:none}
-section.s > *{width:100%;min-width:0;margin-left:auto;margin-right:auto;max-width:900px}
+section.s{position:relative;min-height:100vh;padding:10vh var(--page-gutter);display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);opacity:1;transform:none}
+section.s > *{width:100%;min-width:0;margin-left:auto;margin-right:auto;max-width:var(--content-max)}
 section.s.in{opacity:1;transform:none}
 section.s:target{opacity:1;transform:none}
 section.s.hero{min-height:92vh}
 section.s.hero h1{text-align:center}
+section.s.hero h1 .acc{display:inline-block;max-width:100%}
 section.s.hero > .kicker{text-align:center;justify-content:center}
-section.s.hero > .muted{text-align:center}
+section.s.hero > .muted{text-align:center;max-width:100ch}
 section.s.compact{padding-top:5vh;padding-bottom:5vh}
 
 .kicker{font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
@@ -273,7 +276,7 @@ figcaption b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-wei
 .sim-steps li.bad{border-top-color:var(--accent);color:var(--accent)}
 @media (max-width:900px){
   section.s::before,section.s::after{display:none}
-  section.s{padding:9vh 6vw}
+  section.s{padding:9vh var(--page-gutter)}
 }
 @media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){
@@ -293,6 +296,18 @@ figcaption b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-wei
 .equipo-details{margin-top:1.5rem;background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:1rem 1.2rem}
 .equipo-details summary{cursor:pointer;font-weight:600;color:var(--accent2)}
 .equipo-details p{margin-top:.8rem}
+.reading-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:1rem 0;padding:1rem 1.2rem;background:var(--soft);border-radius:4px}
+.reading-controls[hidden]{display:none}
+.reading-controls p{font-size:.95rem;color:var(--muted)}
+.reading-controls .btn{background:var(--card);white-space:normal}
+.summary-grid{margin-top:1.4rem}
+.brief-line{margin-top:1.2rem;padding:.9rem 1.1rem;border-left:4px solid var(--accent);background:var(--soft)}
+.content-details{margin-top:1rem;padding:1rem 1.2rem;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.content-details > summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:1.08rem}
+.content-details > summary::marker{color:var(--accent)}
+.content-details > summary:focus-visible,.reading-controls .btn:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.content-details[open] > summary{padding-bottom:.8rem;margin-bottom:1rem;border-bottom:1px solid var(--line)}
+.content-details .tw{margin-top:.8rem}
 .card p + p{margin-top:.6rem}
 @media (max-width:720px){.equipo-steps{grid-template-columns:1fr}}
 
@@ -327,7 +342,7 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
 @media print{
   @page{size:A4;margin:16mm}
   body{background:#fff;font-size:10pt;color:#1B2430}
-  #bg,.top,.bar,.diagram-viewer-toolbar,.hx{display:none !important}
+  #bg,.top,.bar,.diagram-viewer-toolbar,.hx,.reading-controls{display:none !important}
   section.s,section.s.hero{display:block;min-height:0;padding:0 0 8mm;opacity:1;transform:none;break-before:page}
   section.s:first-child{break-before:auto}
   section.s > *{max-width:none}
@@ -340,6 +355,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   .diagram-viewer-stage > svg{position:static !important;width:100% !important;height:auto !important;transform:none !important}
   figure{break-inside:avoid}
   details > *{display:block !important}
+  .content-details{padding:0;border:0;background:none}
+  .content-details > summary{display:none !important}
 }
 
 </style>
@@ -365,8 +382,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
 <section class="s hero" id="inicio" data-group="inicio">
   <div class="kicker">ARTI-4219 Arquitectura de Plataformas · Hoja de trabajo 10</div>
   <h1>Legacy-Pay:<br>de <span class="strike">un despliegue al mes</span> a <span class="acc">despliegues independientes</span></h1>
-  <p class="muted" style="max-width:700px">Maniobra inversa de Conway: reestructurar la organización de la empresa de pagos para que su arquitectura emerja como microservicios débilmente acoplados, con equipos alineados a flujos de valor, una plataforma de autoservicio y modos de interacción explícitos.</p>
-  <div class="hx" id="hx" style="margin-top:1.8rem;max-width:900px">
+  <p class="muted">Maniobra inversa de Conway: reestructurar la organización de la empresa de pagos para que su arquitectura emerja como microservicios débilmente acoplados, con equipos alineados a flujos de valor, una plataforma de autoservicio y modos de interacción explícitos.</p>
+  <div class="hx" id="hx" style="margin-top:1.8rem">
     <svg id="hxSvg" viewBox="0 0 1000 780" role="img" aria-label="Animación comparativa: entrega por silos frente a entrega por streams con plataforma" style="width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--line);border-radius:4px;box-shadow:3px 3px 0 var(--line)">
       <rect x="24" y="12" width="129" height="28" rx="14" fill="var(--ink)"/><text x="39" y="31" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="700" letter-spacing="0.4" fill="#FFFFFF">ANTES · silos</text>
       <g id="gAntes" transform="translate(0,30)"></g>
@@ -399,6 +416,10 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
     <div class="card accent"><h3>Aprendizaje verificable</h3><p>Alta de comercios descubre el portal con Plataforma. Seguridad y Datos transfieren habilidades y cierran cada intervención al demostrar autonomía.</p></div>
   </div>
   <p style="margin-bottom:1rem">La meta es entregar bajo demanda por servicio y reducir la espera entre equipos. El piloto permitirá medir la mejora frente a un despliegue mensual y al SLA de dos semanas para cambios de datos.</p>
+  <div class="reading-controls" hidden>
+    <p id="reading-status" aria-live="polite">Vista de síntesis · Despliega cada apartado para consultar su fundamento.</p>
+    <button type="button" class="btn" id="reading-toggle" aria-expanded="false">Mostrar análisis completo</button>
+  </div>
   <div class="index">
     <a href="#i"><span class="n">I</span><div><h3>Diagnóstico de la Ley de Conway</h3><p class="muted">Tres traspasos a silos que explican el monolito</p></div></a>
     <a href="#ii"><span class="n">II</span><div><h3>Rediseño topológico</h3><p class="muted">Maniobra inversa: streams, plataforma y subsistema especialista</p></div></a>
@@ -412,6 +433,13 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   <div class="kicker"><span class="sec">I</span>Diagnóstico de la Ley de Conway</div>
   <h2>Tres traspasos concentran la espera y acoplan la entrega</h2>
   <p>El caso describe 150 ingenieros, cinco equipos de desarrollo y tres silos que controlan los cambios de datos, la revisión de seguridad y la producción. La frecuencia observada es de un despliegue mensual.</p>
+  <div class="grid three-grid summary-grid">
+    <div class="card accent"><h3>Datos: espera compartida</h3><p>Tres DBAs concentran los cambios de esquema. Cada ticket tiene un SLA de dos semanas.</p></div>
+    <div class="card accent"><h3>Seguridad: devolución tardía</h3><p>La revisión llega un día antes del pase y puede rechazar el entregable completo.</p></div>
+    <div class="card accent"><h3>Operaciones: ventana común</h3><p>Diez SysAdmins despliegan manualmente los viernes. Desarrollo depende de su disponibilidad.</p></div>
+  </div>
+  <p class="brief-line"><strong>Conclusión de Conway:</strong> la propiedad centralizada de datos y producción favorece cambios coordinados. Para entregar por separado, deben cambiar las responsabilidades, los permisos y los contratos.</p>
+  <details class="content-details"><summary>Ver los tres traspasos y la relación causal con la arquitectura</summary>
   <h3 id="diagnostico" style="margin-top:1.5rem">1.1 Cuellos de botella del flujo de valor</h3>
   <div class="tw"><table>
     <thead><tr><th>Traspaso</th><th>Hecho del caso</th><th>Efecto sobre la entrega</th></tr></thead>
@@ -430,6 +458,7 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
     <li><b>Arquitectura resultante</b>La comunicación atraviesa silos funcionales y el sistema reproduce esas dependencias en datos y liberaciones. La maniobra inversa debe redistribuir propiedad, capacidades y contratos entre equipos.</li>
   </ol>
   <p class="muted" style="margin-top:1rem">La dependencia de tablas compartidas es una inferencia arquitectónica a validar con un mapa de consumidores. El enunciado confirma la BD monolítica y los permisos centralizados. La línea base disponible es un despliegue mensual y dos semanas de SLA para cambios de esquema.</p>
+  </details>
 </section>
 
 <!-- II · REDISEÑO -->
@@ -522,6 +551,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   </div>
   <figcaption><b>TO-BE.</b> Los identificadores relacionan cada vínculo con su contrato en la matriz 3.3. R1 corresponde a Alta de comercios y su validación con Tarifas. R2 cubre los demás equipos. R9 y R10 incluyen a los quince equipos de negocio y al Núcleo. El cierre de R8 precede a la posterior integración de Datos en Plataforma.</figcaption>
 </figure>
+  <p class="brief-line"><strong>Decisión de diseño:</strong> equipos de ocho o nueve personas con servicios y datos propios. Plataforma absorbe la complejidad operativa; el Núcleo encapsula el procesamiento monetario especializado.</p>
+  <details class="content-details"><summary>Ver equipos, propiedad y carga cognitiva</summary>
   <h3 id="equipos" style="margin-top:1.8rem">2.1 Equipos estables con propiedad de extremo a extremo</h3>
   <p>Los cinco flujos agrupan equipos de ocho o nueve personas. Cada equipo posee un resultado de negocio, sus servicios y datos, pruebas, pipeline, observabilidad, guardia y SLO. La composición incorpora capacidades de producto, desarrollo, calidad, operación y seguridad. El reparto por especialidad se valida al reasignar personas.</p>
   <div class="tw"><table>
@@ -548,6 +579,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
       <tr><td>Núcleo Transaccional</td><td>Alta especialización técnica en protocolos, criptografía y consistencia contable del procesamiento de pagos.</td><td>Plataforma absorbe operación de infraestructura y Seguridad facilita controles. Se revisan saturación y cola de cambios del núcleo.</td></tr>
     </tbody>
   </table></div>
+  </details>
+  <details class="content-details"><summary>Ver capacidades de Plataforma y contratos del Núcleo</summary>
   <h3 id="plataforma" style="margin-top:1.8rem">2.2 Plataforma como producto de autoservicio</h3>
   <p>Los diez SysAdmins se reorganizan en <b>Entrega, cinco personas</b>, responsable de plantillas, portal y CI/CD, y <b>Runtime y datos, cinco personas</b>, responsable de infraestructura, redes, almacenamiento y observabilidad. Cada capacidad tiene un propietario dentro de Plataforma y una interfaz común de autoservicio.</p>
   <div class="tw"><table>
@@ -574,12 +607,20 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
     </tbody>
   </table></div>
   <p class="muted" style="margin-top:1rem">El dominio de pagos con tarjeta, el alcance PCI DSS y los servicios propuestos son supuestos de diseño. Seguridad valida el alcance y los controles aplicables. La adopción productiva del Núcleo requiere evidencia de esos controles y pruebas de su contrato.</p>
+  </details>
 </section>
 
 <!-- III · INTERACCIONES -->
 <section class="s" id="iii" data-group="iii">
   <div class="kicker"><span class="sec">III</span>Dinámicas de interacción y APIs de equipo</div>
   <h2>Descubrir juntos y transferir capacidad hasta alcanzar autonomía</h2>
+  <div class="grid three-grid summary-grid">
+    <div class="card accent"><h3>Colaboración: descubrir</h3><p>Alta de comercios y Plataforma codiseñan el portal durante unas diez semanas. Tarifas comprueba que otro equipo puede adoptarlo.</p></div>
+    <div class="card accent"><h3>X-as-a-Service: consumir</h3><p>Al demostrar despliegue y recuperación autónomos, cada equipo consume capacidades mediante contratos estables y soporte asíncrono.</p></div>
+    <div class="card accent"><h3>Facilitación: aprender</h3><p>Seguridad y Datos acompañan prácticas reales. La intervención termina cuando el equipo receptor demuestra autonomía.</p></div>
+  </div>
+  <p class="brief-line"><strong>Regla de evolución:</strong> cada relación tiene un propósito y una condición de cambio. La colaboración no queda abierta indefinidamente y el habilitador transfiere el conocimiento.</p>
+  <details class="content-details"><summary>Ver el piloto, los criterios de salida y la API de Plataforma</summary>
   <h3 id="piloto">3.1 Discover-to-Establish con Alta de comercios</h3>
   <p>El piloto es el equipo de Alta de comercios, de ocho personas. Se supone que su servicio procesa onboarding sin datos de tarjeta y tiene cambios frecuentes. Entrega y el piloto comparten temporalmente el resultado de construir un <i>walking skeleton</i>. Runtime aporta la infraestructura y la BD gestionada. El comité reserva capacidad para el aprendizaje y acepta una reducción temporal de entrega funcional.</p>
   <div class="tw"><table>
@@ -601,6 +642,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
       <tr><td>Roadmap y revisión</td><td>Prioridades basadas en adopción, tiempos, tickets e investigación de DevEx. La fricción recurrente abre una colaboración acotada con resultado y fecha de revisión.</td></tr>
     </tbody>
   </table></div>
+  </details>
+  <details class="content-details"><summary>Ver cómo Seguridad y Datos transfieren capacidades</summary>
   <h3 id="habilitadores" style="margin-top:1.8rem">3.2 Seguridad facilita DevSecOps y Datos facilita la extracción</h3>
   <p>Los cinco auditores forman un equipo habilitador. Dos parejas trabajan con un equipo receptor cada una y una persona mantiene el catálogo de políticas y coordina evidencia de cumplimiento. Cada intervención dura de cuatro a ocho semanas y termina cuando el receptor demuestra autonomía.</p>
   <ol class="equipo-steps">
@@ -621,6 +664,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   <p style="margin-top:1rem">Un hallazgo crítico activa un bloqueo automático temprano con diagnóstico accionable. Las entregas ordinarias avanzan al cumplir las políticas. Los incumplimientos y excepciones se resuelven por el mecanismo publicado. Seguridad evalúa el aprendizaje por autonomía del receptor, detección temprana y tiempo de corrección.</p>
   <p style="margin-top:.8rem">La API del habilitador incluye calendario de intervenciones priorizadas por riesgo, objetivos de aprendizaje, guías, comunidad de champions y canal de consulta. Comienza con el piloto y el perímetro del Núcleo. Las parejas atienden como máximo dos equipos simultáneamente y rotan por los quince equipos stream-aligned y el Núcleo según capacidad.</p>
   <div class="callout"><h3>Destino de los especialistas</h3><p>Seguridad conserva la curaduría de políticas y ofrece nuevas intervenciones con fecha de salida cuando aparecen brechas. Los tres DBAs forman un habilitador temporal de Datos, con hasta dos equipos receptores a la vez, para transferir modelado, migraciones y recuperación. Los equipos receptores ejecutan las extracciones. Cuando sale el último contexto de la BD compartida, los DBAs se integran a Runtime y datos, que pasa de cinco a ocho integrantes.</p></div>
+  </details>
+  <details class="content-details"><summary>Ver los diez contratos de interacción y su evolución</summary>
   <h3 id="interacciones" style="margin-top:1.8rem">3.3 Contratos de interacción y condición de cambio</h3>
   <p>Los identificadores R1–R10 corresponden al diagrama. Colaboración implica cocreación temporal, Facilitación transfiere habilidades y X-as-a-Service permite consumir una capacidad mediante un contrato estable.</p>
   <p class="table-hint">Desliza la tabla horizontalmente para consultar las tres columnas.</p>
@@ -641,6 +686,7 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   </table></div>
   <h3 style="margin-top:1.6rem">3.4 Fricción como señal de ajuste</h3>
   <p>El comité revisa mensualmente el piloto y trimestralmente la topología. Las solicitudes manuales recurrentes priorizan una capacidad de Plataforma. La coordinación obligatoria entre equipos en cada entrega activa una revisión de fronteras y contratos. Una cola creciente del Núcleo exige revisar alcance, capacidad y autoservicio. Cada colaboración tiene un resultado y fecha de revisión. Cada facilitación termina con una demostración de autonomía.</p>
+  </details>
 </section>
 
 <!-- CIERRE -->
@@ -648,6 +694,12 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
   <div class="kicker">Cierre del comité</div>
   <h2>Avanzar por evidencia de autonomía y seguridad</h2>
   <p>El comité propone iniciar el piloto y redistribuir gradualmente propiedad y permisos. Cada fase se cierra con evidencia. Los horizontes de 0–3, 3–12 y 12–18 meses son estimaciones que se revisan según carga de trabajo, aprendizaje y riesgo.</p>
+  <div class="grid three-grid summary-grid">
+    <div class="card accent"><h3>0–3 meses · Piloto</h3><p>Construir el portal con Alta de comercios y validar la adopción autónoma de Tarifas.</p></div>
+    <div class="card accent"><h3>3–12 meses · Extensión</h3><p>Validar los contratos y controles del Núcleo, y acompañar la adopción por equipos.</p></div>
+    <div class="card accent"><h3>12–18 meses · Consolidación</h3><p>Completar la extracción de datos y retirar las dependencias compartidas con recuperación probada.</p></div>
+  </div>
+  <details class="content-details"><summary>Ver la hoja de ruta, responsables y condiciones de avance</summary>
   <h3 id="hoja-ruta" style="margin-top:1.4rem">Hoja de ruta y decisiones de avance</h3>
   <div class="tw"><table>
     <thead><tr><th>Fase</th><th>Resultado y responsables</th><th>Condición de avance</th></tr></thead>
@@ -657,6 +709,8 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
       <tr><td><b>3 · Consolidar</b><br>Meses 12–18</td><td>Los propietarios completan la extracción de contextos y la retirada de la BD compartida. Los DBAs se integran a Runtime y datos. Plataforma y Núcleo operan sus contratos X-as-a-Service. Los habilitadores cierran intervenciones al alcanzar autonomía.</td><td>Despliegues independientes por servicio, datos con propietario único y recuperación probada. La ventana común se retira cuando toda entrega utiliza una ruta automatizada validada. Las métricas permiten revisar la mejora.</td></tr>
     </tbody>
   </table></div>
+  </details>
+  <details class="content-details"><summary>Ver métricas, riesgos y supuestos de la transición</summary>
   <h3 id="metricas" style="margin-top:1.6rem">Trazabilidad y métricas de resultado</h3>
   <div class="tw"><table>
     <thead><tr><th>Problema y decisión</th><th>Línea base</th><th>Meta y evidencia</th></tr></thead>
@@ -684,6 +738,7 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
     <li>La dirección habilita permisos por equipo, formación, guardias y capacidad para sostener la operación durante la migración. Cada incorporación a producción requiere controles y recuperación probados.</li>
     <li>Las metas y fechas son propuestas. La línea base disponible proviene del caso. El resto de indicadores empieza a medirse con el piloto.</li>
   </ul>
+  </details>
   <div class="callout g"><h3>Acuerdo propuesto</h3><p>Iniciar Alta de comercios como piloto, asignar propietarios y capacidad de aprendizaje, y evaluar sus criterios de salida antes de extender la plataforma. El comité revisará la evidencia de entrega, carga cognitiva y riesgo para decidir cada siguiente ola.</p></div>
   <details class="equipo-details"><summary>Referencias y fundamento conceptual</summary><p>Universidad de los Andes. <i>Hoja de trabajo No. 10, ARTI-4219 Arquitectura de Plataformas, 2026-20</i>. Contexto y requisitos del caso.</p><p>Material del curso. <i>S12 – Estructura Organizacional</i>. Maniobra inversa, cuatro topologías, tres modos de interacción y transición evolutiva.</p><p>Skelton, M. y Pais, M. (2019). <i>Team Topologies</i>. IT Revolution. Referencia indicada en el material de clase.</p></details>
 </section>
@@ -691,12 +746,62 @@ tfoot td{border-top:2px solid var(--ink);background:var(--soft)}
 
 </main>
 
-<footer style="max-width:900px;margin:0 auto;padding:2rem 5vw;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+<footer class="container" style="margin:0 auto;padding-block:2rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
   <span>ARTI-4219 · Arquitectura de Plataformas · Uniandes</span>
   <span>Hoja de trabajo 10 · Legacy-Pay · 2026-20</span>
 </footer>
 
 <script>
+/* ---------- Síntesis, detalle y enlaces directos ---------- */
+(function(){
+  const details = [...document.querySelectorAll('main details')];
+  const toggle = document.getElementById('reading-toggle');
+  const status = document.getElementById('reading-status');
+  function sync(){
+    const allOpen = details.every(detail => detail.open);
+    const someOpen = details.some(detail => detail.open);
+    toggle.textContent = allOpen ? 'Volver a síntesis' : 'Mostrar análisis completo';
+    toggle.setAttribute('aria-expanded', String(allOpen));
+    status.textContent = allOpen ? 'Análisis completo · Todos los apartados están abiertos.' :
+      someOpen ? 'Vista de síntesis · Algunos apartados están abiertos.' :
+      'Vista de síntesis · Despliega cada apartado para consultar su fundamento.';
+  }
+  toggle.closest('.reading-controls').hidden = false;
+  toggle.addEventListener('click', function(){
+    const open = !details.every(detail => detail.open);
+    details.forEach(detail => { detail.open = open; });
+    sync();
+  });
+  details.forEach(detail => detail.addEventListener('toggle', sync));
+  function revealAnchor(){
+    let id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const target = document.getElementById(id);
+    if(!target) return;
+    let ancestor = target.closest('details');
+    if(!ancestor) return;
+    while(ancestor){
+      ancestor.open = true;
+      ancestor = ancestor.parentElement.closest('details');
+    }
+    requestAnimationFrame(() => target.scrollIntoView({block:'start'}));
+  }
+  addEventListener('hashchange', revealAnchor);
+  revealAnchor();
+  let beforePrint = null;
+  addEventListener('beforeprint', function(){
+    if(beforePrint === null) beforePrint = details.map(detail => detail.open);
+    details.forEach(detail => { detail.open = true; });
+  });
+  addEventListener('afterprint', function(){
+    if(beforePrint === null) return;
+    details.forEach((detail, index) => { detail.open = beforePrint[index]; });
+    beforePrint = null;
+    sync();
+  });
+  sync();
+})();
+
 /* ---------- Fondo: carriles de partición con eventos (estático) ---------- */
 (function(){
   const c = document.getElementById('bg'), x = c.getContext('2d');
